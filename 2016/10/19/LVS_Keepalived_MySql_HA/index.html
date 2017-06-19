@@ -1,0 +1,724 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mysql,keeplived,LVS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="近期公司项目需要做架构改造，之前的数据库是两台MySql做的主从复制，主机挂掉后，需要人工干预切换到备库，这样很不方便。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="双机实现 LVS+Keepalived+MySql 高可用负载均衡环境">
+<meta property="og:url" content="https://my.oschina.net/u/588736/blog/2016/10/19/LVS_Keepalived_MySql_HA/index.html">
+<meta property="og:site_name" content="晚来风">
+<meta property="og:description" content="近期公司项目需要做架构改造，之前的数据库是两台MySql做的主从复制，主机挂掉后，需要人工干预切换到备库，这样很不方便。">
+<meta property="og:image" content="http://7xvh4i.com1.z0.glb.clouddn.com/f6b6dce18dc67711.png">
+<meta property="og:image" content="http://7xvh4i.com1.z0.glb.clouddn.com/8c334d070f37af3e.png">
+<meta property="og:image" content="http://p1.bqimg.com/567571/ab092ba1501a3218.png">
+<meta property="og:image" content="http://p1.bqimg.com/567571/3fe998933389e6bb.png">
+<meta property="og:image" content="http://p1.bqimg.com/567571/14e007cb6cb4fde2.png">
+<meta property="og:updated_time" content="2017-05-27T07:54:58.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="双机实现 LVS+Keepalived+MySql 高可用负载均衡环境">
+<meta name="twitter:description" content="近期公司项目需要做架构改造，之前的数据库是两台MySql做的主从复制，主机挂掉后，需要人工干预切换到备库，这样很不方便。">
+<meta name="twitter:image" content="http://7xvh4i.com1.z0.glb.clouddn.com/f6b6dce18dc67711.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://my.oschina.net/u/588736/blog/2016/10/19/LVS_Keepalived_MySql_HA/"/>
+
+
+  <title> 双机实现 LVS+Keepalived+MySql 高可用负载均衡环境 | 晚来风 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">晚来风</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">林花谢了春红，太匆匆。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                双机实现 LVS+Keepalived+MySql 高可用负载均衡环境
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-19T00:00:00+08:00" content="2016-10-19">
+              2016-10-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LoadBalance/" itemprop="url" rel="index">
+                    <span itemprop="name">LoadBalance</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>近期公司项目需要做架构改造，之前的数据库是两台MySql做的主从复制，主机挂掉后，需要人工干预切换到备库，这样很不方便。</p>
+<a id="more"></a>
+<p>准备搭建一套LVS+Keepalived+MySql的服务架构，按道理是4台机器比较好，做如下架构：<br><img src="http://7xvh4i.com1.z0.glb.clouddn.com/f6b6dce18dc67711.png" alt="图1"><br>其中，2台Mysql做主主复制，同时对外服务；2台LVS负责均衡服务器做主备，并配置keepalived做双活实现failover 。  </p>
+<p>机器不够，就2台机器……</p>
+<p>这样来：<br><img src="http://7xvh4i.com1.z0.glb.clouddn.com/8c334d070f37af3e.png" alt="图2"></p>
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">Host IP</div><div class="line">-----------------------------------------------------------------------</div><div class="line">Host1: 172.19.238.63</div><div class="line">Host2: 172.19.238.64</div><div class="line">VIP: 172.19.238.233</div><div class="line"></div><div class="line">OS</div><div class="line">-----------------------------------------------------------------------</div><div class="line">[root@DS-DEV-04 ~]# cat /etc/redhat-release</div><div class="line">CentOS release 6.6 (Final)</div><div class="line">[root@DS-DEV-05 ~]# uname -m</div><div class="line">x86_64</div><div class="line"></div><div class="line">MySql</div><div class="line">-----------------------------------------------------------------------</div><div class="line">[root@DS-DEV-04 ~]# mysql --version</div><div class="line">mysql  Ver 14.14 Distrib 5.5.43, for Linux (x86_64) using readline 5.1</div><div class="line"></div><div class="line">keepalived</div><div class="line">-----------------------------------------------------------------------</div><div class="line">[root@DS-DEV-04 ~]# keepalived --version</div><div class="line">Keepalived v1.2.13 (03/19,2015)</div><div class="line"></div><div class="line">ipvsadm</div><div class="line">-----------------------------------------------------------------------</div><div class="line">[root@DS-DEV-04 ~]# ipvsadm --version</div><div class="line">ipvsadm v1.26 2008/5/15 (compiled with popt and IPVS v1.2.1)</div></pre></td></tr></table></figure>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="1-关闭防火墙"><a href="#1-关闭防火墙" class="headerlink" title="1 关闭防火墙"></a>1 关闭防火墙</h3><p>为防止端口访问的一些不必要情况，以及keepalived可能会出现脑裂，这里图方便直接关闭防火墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@DS-DEV-04 ~]# service iptables stop</div><div class="line"></div><div class="line"># 执行关闭防火墙自动运行命令：</div><div class="line">[root@DS-DEV-04 ~]# chkconfig iptables off</div><div class="line"></div><div class="line"># 验证：</div><div class="line">[root@DS-DEV-04 ~]# chkconfig --list | grep iptables</div></pre></td></tr></table></figure></p>
+<h3 id="2-配置两台MySQL服务器主主复制"><a href="#2-配置两台MySQL服务器主主复制" class="headerlink" title="2 配置两台MySQL服务器主主复制"></a>2 配置两台MySQL服务器主主复制</h3><h4 id="配置两台mysql的root用户可接受任何主机连接"><a href="#配置两台mysql的root用户可接受任何主机连接" class="headerlink" title="配置两台mysql的root用户可接受任何主机连接"></a>配置两台mysql的root用户可接受任何主机连接</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select user,host from mysql.user;</div><div class="line">+-------------+--------------+</div><div class="line">| user        | host         |</div><div class="line">+-------------+--------------+</div><div class="line">| root        | %            |</div><div class="line">| ...         | ...          |</div><div class="line">+-------------+--------------+</div><div class="line">.. rows in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h4 id="主主配置操作"><a href="#主主配置操作" class="headerlink" title="主主配置操作"></a>主主配置操作</h4><h5 id="配置文件-etc-my-cnf（我修改了端口为3506）"><a href="#配置文件-etc-my-cnf（我修改了端口为3506）" class="headerlink" title="配置文件/etc/my.cnf（我修改了端口为3506）"></a>配置文件/etc/my.cnf（我修改了端口为3506）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">port=3506</div><div class="line">default-character-set=utf8</div><div class="line">[mysqld]</div><div class="line">port=3506</div><div class="line">datadir=/var/lib/mysql</div><div class="line">socket=/var/lib/mysql/mysql.sock</div><div class="line">user=mysql</div><div class="line">character_set_server=utf8</div><div class="line">init_connect=&apos;SET NAMES utf8&apos;</div><div class="line">lower_case_table_names=1</div><div class="line"></div><div class="line">server-id=1 # 另一台需要设置为不同的id</div><div class="line">log_bin=mysql-binlog # 复制需要开启binlog</div><div class="line">relay-log=mysqld-relay-bin</div><div class="line">#binlog_format=ROW</div><div class="line">#binlog-do-db=xxx	# 该选项配置只会复制xxx数据库的数据</div><div class="line">binlog-ignore-db=mysql	# ... </div><div class="line">#replicate-ignore-db=zdb0001	# 不复制指定数据库的数据</div><div class="line">log_slave_updates=1</div><div class="line"></div><div class="line"># Disabling symbolic-links is recommended to prevent assorted security risks</div><div class="line">symbolic-links=0</div><div class="line"></div><div class="line"># 避免两台服务器同时做更新时自增长字段的值之间发生冲突</div><div class="line">auto-increment-increment=2 # 两台都设置为2</div><div class="line">auto-increment-offset=1	# 另一台机器配置2</div><div class="line">#slave-skip-errors=all</div><div class="line"></div><div class="line">[mysqld_safe]</div><div class="line">log-error=/var/log/mysqld.log</div><div class="line">pid-file=/var/run/mysqld/mysqld.pid</div></pre></td></tr></table></figure>
+<h5 id="新建复制账户"><a href="#新建复制账户" class="headerlink" title="新建复制账户"></a>新建复制账户</h5><p>两台MySql分别执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; GRANT REPLICATION SLAVE ON *.* TO 'replication'@'172.19.238.%' IDENTIFIED  BY '123456';</div><div class="line">mysql&gt; flush  privileges;</div></pre></td></tr></table></figure>
+<h5 id="查看binlog和position"><a href="#查看binlog和position" class="headerlink" title="查看binlog和position"></a>查看binlog和position</h5><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 查看MySql 172.19.238.64 master status</div><div class="line">mysql&gt; show master status;</div><div class="line">+---------------------+----------+--------------+------------------+</div><div class="line">| File                | Position | Binlog_Do_DB | Binlog_Ignore_DB |</div><div class="line">+---------------------+----------+--------------+------------------+</div><div class="line">| mysql-binlog.000001 |      107 |              | mysql            |</div><div class="line">+---------------------+----------+--------------+------------------+</div><div class="line">1 row in set (0.00 sec)</div><div class="line"></div><div class="line"># 查看MySql 172.19.238.63 master status</div><div class="line">mysql&gt; show master status;</div><div class="line">+---------------------+----------+--------------+------------------+</div><div class="line">| File                | Position | Binlog_Do_DB | Binlog_Ignore_DB |</div><div class="line">+---------------------+----------+--------------+------------------+</div><div class="line">| mysql-binlog.000001 |      108 |              | mysql            |</div><div class="line">+---------------------+----------+--------------+------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h5 id="从库配置"><a href="#从库配置" class="headerlink" title="从库配置"></a>从库配置</h5><p>MySql 172.19.238.63作为从库</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; change master to master_host='172.19.238.64', master_user='replication', master_password='123456', master_port=3506, master_log_file='mysql-binlog.000001', master_log_pos=107;</div><div class="line">mysql&gt; start  slave;</div></pre></td></tr></table></figure>
+<p>查看slave状态<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"># 不需要分号结尾</div><div class="line">mysql&gt; show slave status\G</div><div class="line">*************************** 1. row ***************************</div><div class="line">               Slave_IO_State: Waiting for master to send event</div><div class="line">                  Master_Host: 172.19.238.64</div><div class="line">                  Master_User: replication</div><div class="line">                  Master_Port: 3506</div><div class="line">                Connect_Retry: 60</div><div class="line">              Master_Log_File: mysql-binlog.000001</div><div class="line">          Read_Master_Log_Pos: 922</div><div class="line">               Relay_Log_File: mysqld-relay-bin.000006</div><div class="line">                Relay_Log_Pos: 256</div><div class="line">        Relay_Master_Log_File: mysql-binlog.000001</div><div class="line">             Slave_IO_Running: Yes</div><div class="line">            Slave_SQL_Running: Yes</div><div class="line">              Replicate_Do_DB:</div><div class="line">          Replicate_Ignore_DB:</div><div class="line">           Replicate_Do_Table:</div><div class="line">       Replicate_Ignore_Table:</div><div class="line">      Replicate_Wild_Do_Table:</div><div class="line">  Replicate_Wild_Ignore_Table:</div><div class="line">                   Last_Errno: 0</div><div class="line">                   Last_Error:</div><div class="line">                 Skip_Counter: 0</div><div class="line">          Exec_Master_Log_Pos: 922</div><div class="line">              Relay_Log_Space: 413</div><div class="line">              Until_Condition: None</div><div class="line">               Until_Log_File:</div><div class="line">                Until_Log_Pos: 0</div><div class="line">           Master_SSL_Allowed: No</div><div class="line">           Master_SSL_CA_File:</div><div class="line">           Master_SSL_CA_Path:</div><div class="line">              Master_SSL_Cert:</div><div class="line">            Master_SSL_Cipher:</div><div class="line">               Master_SSL_Key:</div><div class="line">        Seconds_Behind_Master: 0</div><div class="line">Master_SSL_Verify_Server_Cert: No</div><div class="line">                Last_IO_Errno: 0</div><div class="line">                Last_IO_Error:</div><div class="line">               Last_SQL_Errno: 0</div><div class="line">               Last_SQL_Error:</div><div class="line">  Replicate_Ignore_Server_Ids:</div><div class="line">             Master_Server_Id: 2</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>出现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Slave_IO_Running: Yes  </div><div class="line">Slave_SQL_Running: Yes</div></pre></td></tr></table></figure></p>
+<p>说明配置成功!  </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 查看进程状态</div><div class="line">mysql&gt; show processlist\G</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>MySql 172.19.238.64作为从库与MySql 172.19.238.63的操作类似</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; change master to master_host='172.19.238.63', master_user='replication', master_password='123456', master_port=3506, master_log_file='mysql-binlog.000001', master_log_pos=108;</div><div class="line">mysql&gt; start  slave;</div></pre></td></tr></table></figure>
+<p>查看slave状态：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 不需要分号结尾</div><div class="line">mysql&gt; show slave status\G</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>配置完成后可以测试数据插入等操作，看看是否做到主主同步。</p>
+<p>另外，若数据库中已经存在很多数据，想做复制的话，则需要手动导出数据到另外一台，使得两台数据库数据一致：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 提供一种简单粗暴的方式</div><div class="line"># 在有数据的数据库上导出相关数据库数据</div><div class="line">[root@DS-DEV-04 ~]# mysql -uroot -p123456 -e "show databases;" | grep -Ev "Database|information_schema|performance_schema|mysql|sys" | xargs mysqldump -uroot -p123456 --databases &gt; mysql_dump.sql</div><div class="line"></div><div class="line"># 复制导出的文件在另一台机器导入</div><div class="line">[root@DS-DEV-05 ~]# mysql -uroot -p123456 -e "source mysql_dump.sql;"</div></pre></td></tr></table></figure></p>
+<p>关于Mysql复制的一些知识，这篇<a href="http://blog.csdn.net/hguisu/article/details/7325124" target="_blank" rel="external">博文</a>讲的很好，也可以参考书籍<a href="http://www.linuxidc.com/Linux/2014-10/108464.htm" target="_blank" rel="external">《高性能MySQL》</a>  </p>
+<h3 id="3-配置keepalived"><a href="#3-配置keepalived" class="headerlink" title="3 配置keepalived"></a>3 配置keepalived</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 采用yum方式安装，我试过编译方式安装，总是出现配置文件中关键字'nb_get_retry'无法识别，导致配置的'notify_down'脚本不执行</div><div class="line">[root@DS-DEV-04 ~]# yum -y install keepalived</div></pre></td></tr></table></figure>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p>正常情况下，采用yum方式安装好keepalived之后，会自动生成配置文件/etc/keepalived/keepalived.conf，修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">! Configuration File for keepalived</div><div class="line"></div><div class="line">global_defs &#123;</div><div class="line">   notification_email &#123;</div><div class="line">     #acassen@firewall.loc</div><div class="line">     #failover@firewall.loc</div><div class="line">     #sysadmin@firewall.loc</div><div class="line">   &#125;</div><div class="line">   #notification_email_from Alexandre.Cassen@firewall.loc</div><div class="line">   #smtp_server 192.168.200.1</div><div class="line">   #smtp_connect_timeout 30</div><div class="line">   router_id LVS_Master</div><div class="line">&#125;</div><div class="line"></div><div class="line">vrrp_instance VI_1 &#123;</div><div class="line">    state BACKUP # 我设置两台都为BACKUP</div><div class="line">    interface eth1 # 与机器实际网卡匹配</div><div class="line">    virtual_router_id 66 # 另一台机器相同</div><div class="line">    priority 100 # 优先级，另一台配置为90即可</div><div class="line">    advert_int 1</div><div class="line">    nopreempt # 允许一个priority低的节点作为master，即使有priority更高的节点启动</div><div class="line">    authentication &#123;</div><div class="line">        auth_type PASS</div><div class="line">        auth_pass 1111</div><div class="line">    &#125;</div><div class="line">    virtual_ipaddress &#123;</div><div class="line">        172.19.238.233 # VIP</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">virtual_server 172.19.238.233 3506 &#123;</div><div class="line">    delay_loop 6</div><div class="line">    lb_algo wrr # LVS调度算法</div><div class="line">    lb_kind DR # 直接路由模式，其他有NAT啥的</div><div class="line">    nat_mask 255.255.255.0</div><div class="line">    persistence_timeout 50</div><div class="line">    protocol TCP</div><div class="line"></div><div class="line">    real_server 172.19.238.63 3506 &#123;</div><div class="line">        weight 1</div><div class="line">        notify_down /root/test.sh # real_server Mysql挂掉会执行该脚本</div><div class="line">        TCP_CHECK &#123;</div><div class="line">            connect_timeout 3</div><div class="line">            nb_get_retry 3</div><div class="line">            delay_before_retry 3</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    real_server 172.19.238.64 3506 &#123;</div><div class="line">        weight 1</div><div class="line">        #notify_down /root/test.sh # real_server Mysql挂掉会执行该脚本</div><div class="line">        TCP_CHECK &#123;</div><div class="line">            connect_timeout 3</div><div class="line">            nb_get_retry 3</div><div class="line">            delay_before_retry 3</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>test.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#/bin/bash</div><div class="line"></div><div class="line">USER=&apos;root&apos;</div><div class="line">PASSWD=&apos;123456&apos;</div><div class="line">PORT=&apos;3506&apos;</div><div class="line"></div><div class="line">/etc/init.d/mysqld start</div><div class="line"></div><div class="line">sleep 2</div><div class="line"></div><div class="line">/usr/bin/mysqladmin -u$&#123;USER&#125; -p$&#123;PASSWD&#125; -P$&#123;PORT&#125; ping &amp;&gt;/dev/null</div><div class="line"></div><div class="line">if [ ! $? = 0 ]</div><div class="line">then</div><div class="line">        /etc/init.d/keepalived stop</div><div class="line">        exit 1</div><div class="line">fi</div></pre></td></tr></table></figure>
+<h3 id="4-配置realserver脚本"><a href="#4-配置realserver脚本" class="headerlink" title="4 配置realserver脚本"></a>4 配置realserver脚本</h3><p>vim /etc/init.d/realserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">#!/bin/sh</div><div class="line"></div><div class="line"># filename: realserver</div><div class="line"># 两台机器一样</div><div class="line">VIP=172.19.238.233</div><div class="line">. /etc/rc.d/init.d/functions</div><div class="line"></div><div class="line">case &quot;$1&quot; in</div><div class="line"># 禁用本地的ARP请求、绑定本地回环地址</div><div class="line">start)</div><div class="line">    /sbin/ifconfig lo down</div><div class="line">    /sbin/ifconfig lo up</div><div class="line">    /sbin/ifconfig lo:0 $VIP netmask 255.255.255.255 broadcast $VIP</div><div class="line">    /sbin/route add -host $VIP dev lo:0</div><div class="line">    echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore</div><div class="line">    echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce</div><div class="line">    echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore</div><div class="line">    echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce</div><div class="line">    /sbin/sysctl -p &gt;/dev/null 2&gt;&amp;1</div><div class="line">    echo  &quot;LVS real server starts successfully.&quot;</div><div class="line">    ;;</div><div class="line">stop)</div><div class="line">    /sbin/ifconfig lo:0 down</div><div class="line">    /sbin/route del $VIP &gt;/dev/null 2&gt;&amp;1</div><div class="line">    echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore</div><div class="line">    echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce</div><div class="line">    echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore</div><div class="line">    echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce</div><div class="line">    echo &quot;LVS real server stopped.&quot;</div><div class="line">    ;;</div><div class="line">status)</div><div class="line">    isLoOn=`/sbin/ifconfig lo:0 | grep &quot;$VIP&quot;`</div><div class="line">    isRoOn=`/bin/netstat -rn | grep &quot;$VIP&quot;`</div><div class="line">    if [ &quot;$isLoON&quot; == &quot;&quot; -a &quot;$isRoOn&quot; == &quot;&quot; ]; then</div><div class="line">        echo &quot;LVS real server is not running.&quot;</div><div class="line">    else</div><div class="line">        echo &quot;LVS real server is running.&quot;</div><div class="line">    fi</div><div class="line">    exit 3</div><div class="line">    ;;</div><div class="line">*)</div><div class="line">    echo &quot;Usage: $0 &#123;start|stop|status&#125;&quot;</div><div class="line">    exit 1</div><div class="line">esac</div><div class="line">exit 0</div></pre></td></tr></table></figure></p>
+<p>保存脚本文件后更改该文件权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod +x /etc/init.d/realserver</div></pre></td></tr></table></figure></p>
+<p>开机启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chkconfig realserver on</div></pre></td></tr></table></figure>
+<h3 id="5-开启服务"><a href="#5-开启服务" class="headerlink" title="5 开启服务"></a>5 开启服务</h3><p>在两台机器上分别操作：</p>
+<h4 id="开启keepalived服务"><a href="#开启keepalived服务" class="headerlink" title="开启keepalived服务"></a>开启keepalived服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;# service keepalived start</div><div class="line">查看状态</div><div class="line">&gt;# service keepalived status</div></pre></td></tr></table></figure>
+<h4 id="开启realserver服务"><a href="#开启realserver服务" class="headerlink" title="开启realserver服务"></a>开启realserver服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;# service realserver start</div><div class="line"></div><div class="line">#查看集群状态</div><div class="line">&gt;# ipvsadm -ln</div><div class="line">IP Virtual Server version 1.2.1 (size=4096)</div><div class="line">Prot LocalAddress:Port Scheduler Flags</div><div class="line">  -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn</div><div class="line">TCP  172.19.238.233:3506 wrr persistent 50</div><div class="line">  -&gt; 172.19.238.63:3506           Local   1      0          0</div><div class="line">  -&gt; 172.19.238.64:3506           Route   1      0          0</div></pre></td></tr></table></figure>
+<h3 id="6-验证测试"><a href="#6-验证测试" class="headerlink" title="6 验证测试"></a>6 验证测试</h3><h4 id="测试远程机器通过VIP连接MySql数据库"><a href="#测试远程机器通过VIP连接MySql数据库" class="headerlink" title="测试远程机器通过VIP连接MySql数据库"></a>测试远程机器通过VIP连接MySql数据库</h4><p><img src="http://p1.bqimg.com/567571/ab092ba1501a3218.png" alt="图3"></p>
+<h4 id="测试sql请求是否平均分配到两台服务器"><a href="#测试sql请求是否平均分配到两台服务器" class="headerlink" title="测试sql请求是否平均分配到两台服务器"></a>测试sql请求是否平均分配到两台服务器</h4><p>因为mysql是长连接，所以测试时需要开启多个命令窗口进行连接。</p>
+<h5 id="测试准备"><a href="#测试准备" class="headerlink" title="测试准备"></a>测试准备</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">1. 修改两台机器mysql配置文件，增加</div><div class="line">	replicate-ignore-db=zdb0001</div><div class="line">   注意，这里不使用配置binlog-ignore-db=xxx，可能会有一些问题，具体可以google。</div><div class="line">2. 重启MySQL</div><div class="line">	&gt;# service mysqld restart</div><div class="line">3. 测试配置是否成功</div><div class="line">	3.1 在63机器登录本机mysql</div><div class="line">		&gt;# mysql -uroot -p123456</div><div class="line">	3.2 向zdb0001.user插入新的一行	</div><div class="line">		mysql&gt; insert into zdb0001.user values(8, &quot;different&quot;);</div><div class="line">		mysql&gt; select * from zdb0001.user;</div><div class="line">        +------+-----------+</div><div class="line">        | uid  | uname     |</div><div class="line">        +------+-----------+</div><div class="line">        |    1 | zhangsan  |</div><div class="line">        |    2 | lisi      |</div><div class="line">        |    3 | wangwu    |</div><div class="line">        |    4 | zhaoliu   |</div><div class="line">        |    5 | sunqi     |</div><div class="line">        |    6 | zhouba    |</div><div class="line">        |    7 | wujiu     |</div><div class="line">        |    8 | different |</div><div class="line">        +------+-----------+</div><div class="line">        8 rows in set (0.00 sec)</div><div class="line">	</div><div class="line">	3.3 在64机器查看数据是否同步</div><div class="line">        mysql&gt; select * from user;</div><div class="line">        +------+----------+</div><div class="line">        | uid  | uname    |</div><div class="line">        +------+----------+</div><div class="line">        |    1 | zhangsan |</div><div class="line">        |    2 | lisi     |</div><div class="line">        |    3 | wangwu   |</div><div class="line">        |    4 | zhaoliu  |</div><div class="line">        |    5 | sunqi    |</div><div class="line">        |    6 | zhouba   |</div><div class="line">        |    7 | wujiu    |</div><div class="line">        +------+----------+</div><div class="line">        7 rows in set (0.00 sec)</div><div class="line">	</div><div class="line">    	可以看出数据没有同步，配置replicate-ignore-db=zdb0001生效。</div></pre></td></tr></table></figure>
+<h5 id="测试请求分发情况"><a href="#测试请求分发情况" class="headerlink" title="测试请求分发情况"></a>测试请求分发情况</h5><h6 id="1-在Windows本地连接测试"><a href="#1-在Windows本地连接测试" class="headerlink" title="1 在Windows本地连接测试"></a>1 在Windows本地连接测试</h6><p><img src="http://p1.bqimg.com/567571/3fe998933389e6bb.png" alt="图4"></p>
+<h6 id="2-在另一台服务器连接测试"><a href="#2-在另一台服务器连接测试" class="headerlink" title="2 在另一台服务器连接测试"></a>2 在另一台服务器连接测试</h6><p><img src="http://p1.bqimg.com/567571/14e007cb6cb4fde2.png" alt="图5"></p>
+<p>测试可以看出，两台机器查询的分别是不同机器上的数据，即请求被分发了。</p>
+<h3 id="7-遇到的一些问题"><a href="#7-遇到的一些问题" class="headerlink" title="7 遇到的一些问题"></a>7 遇到的一些问题</h3><h4 id="主主复制配置"><a href="#主主复制配置" class="headerlink" title="主主复制配置"></a>主主复制配置</h4><ul>
+<li><p>之前数据库有数据，从库数据与其不一致</p>
+<p>参照上述过程中数据做迁移，使其一致。</p>
+</li>
+<li><p>想要清除主从复制，然后重新配置</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 从机执行</div><div class="line">mysql&gt; stop slave;</div><div class="line">mysql&gt; reset slave all;</div><div class="line"></div><div class="line"># 主机可执行</div><div class="line">mysql&gt; reset master;</div></pre></td></tr></table></figure>
+</li>
+<li><p>若出现主从复制出错</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Slave_IO_Running: NO</div><div class="line">Slave_SQL_Running: NO</div><div class="line">  </div><div class="line"># 可尝试操作</div><div class="line">mysql&gt; stop slave;</div><div class="line">mysql&gt; reset slave;</div><div class="line">mysql&gt; start slave;</div><div class="line">mysql&gt; show slave status\G</div></pre></td></tr></table></figure>
+</li>
+<li><p>开启从库同步报错  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Last_IO_Errno: 1236</div><div class="line">Last_IO_Error: Got fatal error 1236 from master when reading data from binary log: 'Slave can not handle replication events with the <span class="keyword">checksum</span> that <span class="keyword">master</span> <span class="keyword">is</span> configured <span class="keyword">to</span> <span class="keyword">log</span>; the first event 'mysql-binlog.000001' at 154, the last event read from './mysql-binlog.000001' at 123, the last byte read from './mysql-binlog.000001' at 123.'</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h4><blockquote>
+<p>可能是由于 master 用的 mysql 版本高于 slave , master 的 binlog_checksum 默认设置的是 crc32。 </p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show variables like '%checksum%';</div><div class="line">+---------------------------+-------+</div><div class="line">| Variable_name             | Value |</div><div class="line">+---------------------------+-------+</div><div class="line">| binlog_checksum           | CRC32 |</div><div class="line">| innodb_checksum_algorithm | crc32 |</div><div class="line">| innodb_checksums          | ON    |</div><div class="line">| innodb_log_checksums      | ON    |</div><div class="line">| master_verify_checksum    | OFF   |</div><div class="line">| slave_sql_verify_checksum | ON    |</div><div class="line">+---------------------------+-------+</div><div class="line">6 rows in set (0.01 sec)</div></pre></td></tr></table></figure>
+<p>如果slave用的 5.5 或者更早的版本，请将master的 binglog_checksum设置为 none。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; set global binlog_checksum='NONE';</div></pre></td></tr></table></figure></p>
+<p>添加 my.cnf 配置文件中添加如下设置，下次重启就可以直接生效了。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">binlog_checksum=NONE</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>发现有些数据库中数据未同步  </p>
+<p>查看配置文件my.cnf中binlog相关配置项：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">binlog-do-db=</div><div class="line">binlog-ignore-db=</div></pre></td></tr></table></figure>
+<h4 id="配置好keepalived，发现无法连接VIP，或者通过VIP无法连接数据库"><a href="#配置好keepalived，发现无法连接VIP，或者通过VIP无法连接数据库" class="headerlink" title="配置好keepalived，发现无法连接VIP，或者通过VIP无法连接数据库"></a>配置好keepalived，发现无法连接VIP，或者通过VIP无法连接数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ERROR 2003 (HY000): Can&apos;t connect to MySQL server on &apos;xxx.xxx.xxx.xxx&apos; (10060)</div><div class="line">1. 防火墙相关端口未开启，关闭防火墙试试</div><div class="line">2. mysql未配置远程主机IP访问权限，检查mysql表中配置的user对应host是否有客户端机器ip</div><div class="line">3. 修改配置端口试试</div></pre></td></tr></table></figure>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>keepalived日志在/var/log/messages，可以查看keepalived运行日志排错、查看主从切换过程等信息。  </p>
+<p>关于 LVS 更详细的介绍可以参考「<a href="http://blog.hesey.net/2013/02/introduce-to-load-balance-and-lvs-briefly.html" target="_blank" rel="external">从一个开发的角度看负载均衡和LVS</a>」一文。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag">#mysql</a>
+          
+            <a href="/tags/keeplived/" rel="tag">#keeplived</a>
+          
+            <a href="/tags/LVS/" rel="tag">#LVS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/14/perl_sendMail/" rel="next" title="perl脚本实现邮件发送功能">
+                <i class="fa fa-chevron-left"></i> perl脚本实现邮件发送功能
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/27/nginx+tomcat_loadbalance/" rel="prev" title="简单测试 Nginx + Tomcat 实现负载均衡">
+                简单测试 Nginx + Tomcat 实现负载均衡 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LenhartG" />
+          <p class="site-author-name" itemprop="name">LenhartG</p>
+          <p class="site-description motion-element" itemprop="description">美国《时代周刊》2006年度风云人物</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gxjares" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2526255830" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验环境"><span class="nav-number">1.</span> <span class="nav-text">实验环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验步骤"><span class="nav-number">2.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-关闭防火墙"><span class="nav-number">2.1.</span> <span class="nav-text">1 关闭防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-配置两台MySQL服务器主主复制"><span class="nav-number">2.2.</span> <span class="nav-text">2 配置两台MySQL服务器主主复制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置两台mysql的root用户可接受任何主机连接"><span class="nav-number">2.2.1.</span> <span class="nav-text">配置两台mysql的root用户可接受任何主机连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主主配置操作"><span class="nav-number">2.2.2.</span> <span class="nav-text">主主配置操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置文件-etc-my-cnf（我修改了端口为3506）"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">配置文件/etc/my.cnf（我修改了端口为3506）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#新建复制账户"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">新建复制账户</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看binlog和position"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">查看binlog和position</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#从库配置"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">从库配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-配置keepalived"><span class="nav-number">2.3.</span> <span class="nav-text">3 配置keepalived</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">2.3.2.</span> <span class="nav-text">修改配置文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-配置realserver脚本"><span class="nav-number">2.4.</span> <span class="nav-text">4 配置realserver脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-开启服务"><span class="nav-number">2.5.</span> <span class="nav-text">5 开启服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开启keepalived服务"><span class="nav-number">2.5.1.</span> <span class="nav-text">开启keepalived服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开启realserver服务"><span class="nav-number">2.5.2.</span> <span class="nav-text">开启realserver服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-验证测试"><span class="nav-number">2.6.</span> <span class="nav-text">6 验证测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试远程机器通过VIP连接MySql数据库"><span class="nav-number">2.6.1.</span> <span class="nav-text">测试远程机器通过VIP连接MySql数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试sql请求是否平均分配到两台服务器"><span class="nav-number">2.6.2.</span> <span class="nav-text">测试sql请求是否平均分配到两台服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#测试准备"><span class="nav-number">2.6.2.1.</span> <span class="nav-text">测试准备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#测试请求分发情况"><span class="nav-number">2.6.2.2.</span> <span class="nav-text">测试请求分发情况</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-在Windows本地连接测试"><span class="nav-number">2.6.2.2.1.</span> <span class="nav-text">1 在Windows本地连接测试</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-在另一台服务器连接测试"><span class="nav-number">2.6.2.2.2.</span> <span class="nav-text">2 在另一台服务器连接测试</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-遇到的一些问题"><span class="nav-number">2.7.</span> <span class="nav-text">7 遇到的一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主主复制配置"><span class="nav-number">2.7.1.</span> <span class="nav-text">主主复制配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原因分析"><span class="nav-number">2.7.2.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置好keepalived，发现无法连接VIP，或者通过VIP无法连接数据库"><span class="nav-number">2.7.3.</span> <span class="nav-text">配置好keepalived，发现无法连接VIP，或者通过VIP无法连接数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">2.7.4.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=208889&auto=1&height=66"></iframe>
+</div>
+<div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LenhartG</span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+-->
+
+<!--
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,671 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="java用 @interface Annotation{ } 定义一个注解 @Annotation，一个注解是一个类。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java注解">
+<meta property="og:url" content="https://my.oschina.net/u/588736/blog/2016/08/29/annotation01/index.html">
+<meta property="og:site_name" content="晚来风">
+<meta property="og:description" content="java用 @interface Annotation{ } 定义一个注解 @Annotation，一个注解是一个类。">
+<meta property="og:updated_time" content="2016-11-28T09:56:24.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java注解">
+<meta name="twitter:description" content="java用 @interface Annotation{ } 定义一个注解 @Annotation，一个注解是一个类。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://my.oschina.net/u/588736/blog/2016/08/29/annotation01/"/>
+
+
+  <title> java注解 | 晚来风 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">晚来风</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">林花谢了春红，太匆匆。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java注解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-29T00:00:00+08:00" content="2016-08-29">
+              2016-08-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>java用 <strong><em>@interface Annotation{ }</em></strong> 定义一个注解 @Annotation，一个注解是一个类。<br><a id="more"></a><br><strong>@Override、@Deprecated、@SuppressWarnings</strong> 为常见的3个注解。<br>注解相当于一种标记，在程序中加上了注解就等于为程序加上了某种标记，以后，javac编译器，开发工具和其他程序可以用反射来了解你的类以及各种元素上有无任何标记，看你有什么标记，就去干相应的事。  </p>
+<ul>
+<li>注解@Override用在方法上，当我们想重写一个方法时，在方法上加@Override，当我们方法的名字出错时，编译器就会报错。</li>
+<li>注解@Deprecated，用来表示某个类的属性或方法已经过时，不想别人再用时，在属性和方法上用@Deprecated修饰。</li>
+<li>注解@SuppressWarnings用来压制程序中出来的警告，比如在没有用泛型或是方法已经过时的时候。</li>
+</ul>
+<p>注解@Retention可以用来修饰注解，是注解的注解，称为元注解。Retention注解有一个属性value，是RetentionPolicy类型的，Enum RetentionPolicy是一个枚举类型，这个枚举决定了Retention注解应该如何去保持，也可理解为Rentention 搭配 RententionPolicy使用。RetentionPolicy有3个值：<strong>CLASS、RUNTIME、SOURCE</strong></p>
+<ul>
+<li>用 <strong>@Retention(RetentionPolicy.CLASS)</strong> 修饰的注解，表示注解的信息被保留在class文件(字节码文件)中当程序编译时，但不会被虚拟机读取在运行的时候；</li>
+<li>用 <strong>@Retention(RetentionPolicy.SOURCE)</strong> 修饰的注解,表示注解的信息会被编译器抛弃，不会留在class文件中，注解的信息只会留在源文件中；</li>
+<li>用 <strong>@Retention(RetentionPolicy.RUNTIME)</strong> 修饰的注解，表示注解的信息被保留在class文件(字节码文件)中当程序编译时，会被虚拟机保留在运行时。  </li>
+</ul>
+<p>所以他们可以用反射的方式读取。RetentionPolicy.RUNTIME 可以让你从JVM中读取Annotation注解的信息，以便在分析程序的时候使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.self;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</div><div class="line"></div><div class="line"><span class="comment">//定义个一注解@MyTarget，用RetentionPolicy.RUNTIME修饰；</span></div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTarget</div><div class="line">&#123; &#125;</div></pre></td></tr></table></figure>
+<p>测试：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.self;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTargetTest</span></span></div><div class="line">&#123;</div><div class="line"> <span class="meta">@MyTarget</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span></div><div class="line"> &#123;</div><div class="line">  System.out.println(<span class="string">"hello world"</span>);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span></div><div class="line"> &#123;</div><div class="line">  Method method = MyTargetTest.class.getMethod(<span class="string">"doSomething"</span>,<span class="keyword">null</span>);</div><div class="line">  <span class="keyword">if</span>(method.isAnnotationPresent(MyTarget.class))<span class="comment">//如果doSomething方法上存在注解@MyTarget，则为true</span></div><div class="line">  &#123;</div><div class="line">   System.out.println(method.getAnnotation(MyTarget.class));</div><div class="line">  &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面程序打印：@com.self.MyTarget()，如果RetentionPolicy值不为RUNTIME,则不打印。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> <span class="meta">@Retention</span>(RetentionPolicy.SOURCE )</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Override</div><div class="line"></div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE )</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SuppressWarnings</div><div class="line"></div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME )</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Deprecated</div></pre></td></tr></table></figure>
+<p>由上可以看出，只有注解@Deprecated在运行时可以被JVM读取到。  </p>
+<p>注解中可以定义属性，看例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyAnnotation</div><div class="line">&#123;</div><div class="line">  <span class="function">String <span class="title">hello</span><span class="params">()</span> <span class="keyword">default</span> "gege"</span>;</div><div class="line">  <span class="function">String <span class="title">world</span><span class="params">()</span></span>;</div><div class="line">  <span class="keyword">int</span>[] array() <span class="keyword">default</span> &#123; <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</div><div class="line">  EnumTest.<span class="function">TrafficLamp <span class="title">lamp</span><span class="params">()</span> </span>;</div><div class="line">  <span class="function">TestAnnotation <span class="title">lannotation</span><span class="params">()</span> <span class="keyword">default</span> @<span class="title">TestAnnotation</span><span class="params">(value = <span class="string">"ddd"</span>)</span></span>;</div><div class="line">  <span class="function">Class <span class="title">style</span><span class="params">()</span> <span class="keyword">default</span> String.class</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面程序中，定义一个注解@MyAnnotation，定义了6个属性，他们的名字为：<br>hello, world, array, lamp, lannotation, style ;<br>属性hello类型为String, 默认值为gege<br>属性world类型为String, 没有默认值<br>属性array类型为数组, 默认值为2，4，5，6<br>属性lamp类型为一个枚举, 没有默认值<br>属性lannotation类型为注解, 默认值为@TestAnnotation，注解里的属性是注解<br>属性style类型为Class, 默认值为String类型的Class类型  </p>
+<p>看下面例子:定义了一个MyTest类，用注解@MyAnnotation修饰，注解@MyAnnotation定义的属性都赋了值<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@MyAnnotation</span>(hello = <span class="string">"beijing"</span>, world=<span class="string">"shanghai"</span>,array=&#123;&#125;,lamp=TrafficLamp.RED,style=<span class="keyword">int</span>.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest</span></span></div><div class="line">&#123;</div><div class="line"> <span class="meta">@MyAnnotation</span>(lannotation=<span class="meta">@TestAnnotation</span>(value=<span class="string">"baby"</span>), world = <span class="string">"shanghai"</span>,array=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;,lamp=TrafficLamp.YELLOW)</div><div class="line"> <span class="meta">@Deprecated</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">""</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">output</span><span class="params">()</span></span></div><div class="line"> &#123;</div><div class="line">  System.out.println(<span class="string">"output something!"</span>);</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p> 接着通过反射读取注解的信息：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyReflection</span></span></div><div class="line">&#123;</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span></div><div class="line"> &#123;</div><div class="line">  MyTest myTest = <span class="keyword">new</span> MyTest();</div><div class="line">    Class&lt;MyTest&gt; c = MyTest.class;</div><div class="line">    Method method = c.getMethod(<span class="string">"output"</span>, <span class="keyword">new</span> Class[] &#123;&#125;);</div><div class="line">       <span class="comment">//如果MyTest类名上有注解@MyAnnotation修饰，则为true</span></div><div class="line">  <span class="keyword">if</span>(MyTest.class.isAnnotationPresent(MyAnnotation.class))</div><div class="line">  &#123;</div><div class="line">   System.out.println(<span class="string">"have annotation"</span>);</div><div class="line">  &#125;</div><div class="line">   <span class="keyword">if</span> (method.isAnnotationPresent(MyAnnotation.class))</div><div class="line">   &#123;</div><div class="line">     method.invoke(myTest, <span class="keyword">null</span>); <span class="comment">//调用output方法</span></div><div class="line">   <span class="comment">//获取方法上注解@MyAnnotation的信息</span></div><div class="line">     MyAnnotation myAnnotation = method.getAnnotation(MyAnnotation.class);</div><div class="line">     String hello = myAnnotation.hello();</div><div class="line">     String world = myAnnotation.world();</div><div class="line">     System.out.println(hello + <span class="string">", "</span> + world);<span class="comment">//打印属性hello和world的值</span></div><div class="line">     System.out.println(myAnnotation.array().length);<span class="comment">//打印属性array数组的长度</span></div><div class="line">     System.out.println(myAnnotation.lannotation().value()); <span class="comment">//打印属性lannotation的值</span></div><div class="line">     System.out.println(myAnnotation.style());</div><div class="line">   &#125;</div><div class="line">    <span class="comment">//得到output方法上的所有注解，当然是被RetentionPolicy.RUNTIME修饰的</span></div><div class="line">     Annotation[] annotations = method.getAnnotations();</div><div class="line">      <span class="keyword">for</span> (Annotation annotation : annotations)</div><div class="line">      &#123;</div><div class="line">        System.out.println(annotation.annotationType().getName());</div><div class="line">      &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面程序打印：<br>have annotation<br>output something!<br>gege, shanghai<br>3<br>baby<br>class java.lang.String<br>com.heima.annotation.MyAnnotation<br>java.lang.Deprecated  </p>
+<p>如果注解中有一个属性名字叫value,则在应用时可以省略属性名字不写。<br>可见，@Retention(RetentionPolicy.RUNTIME )注解中，RetentionPolicy.RUNTIME是注解属性值，属性名字是value, 属性的返回类型是RetentionPolicy，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTarget</div><div class="line">&#123;</div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以这样用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> <span class="meta">@MyTarget</span>(<span class="string">"aaa"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line"> System.out.println(<span class="string">"hello world"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注解@Target也是用来修饰注解的元注解，它有一个属性ElementType也是枚举类型，值为：<br>ANNOTATION_TYPE、CONSTRUCTOR、FIELD、LOCAL_VARIABLE、METHOD、PACKAGE、PARAMETER、TYPE<br>如@Target(ElementType.METHOD) 修饰的注解表示该注解只能用来修饰在方法上。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.METHOD)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTarget</div><div class="line">&#123;</div><div class="line"> <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> "hahaha"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如把@MyTarget修饰在类上，则程序报错，如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@MyTarget</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTargetTest</span></span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/25/servlet_01/" rel="next" title="Servlet">
+                <i class="fa fa-chevron-left"></i> Servlet
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/29/response_io/" rel="prev" title="Response IO">
+                Response IO <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LenhartG" />
+          <p class="site-author-name" itemprop="name">LenhartG</p>
+          <p class="site-description motion-element" itemprop="description">美国《时代周刊》2006年度风云人物</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gxjares" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2526255830" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=208889&auto=1&height=66"></iframe>
+</div>
+<div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LenhartG</span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+-->
+
+<!--
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

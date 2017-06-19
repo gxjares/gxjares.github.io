@@ -1,0 +1,667 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="java虚拟机在执行程序时，把它管理的内存分为若干数据区域。这些区域都有各自的用途、创建和销毁的时间，有一些是随虚拟机的启动而创建，随虚拟机的退出而销毁，有些则是与线程一一对应，随线程的开始和结束而创建和销毁。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java虚拟机 运行时数据区">
+<meta property="og:url" content="https://my.oschina.net/u/588736/blog/2016/06/15/java_runtime_dataarea/index.html">
+<meta property="og:site_name" content="晚来风">
+<meta property="og:description" content="java虚拟机在执行程序时，把它管理的内存分为若干数据区域。这些区域都有各自的用途、创建和销毁的时间，有一些是随虚拟机的启动而创建，随虚拟机的退出而销毁，有些则是与线程一一对应，随线程的开始和结束而创建和销毁。">
+<meta property="og:image" content="http://7xvh4i.com1.z0.glb.clouddn.com/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.jpg">
+<meta property="og:updated_time" content="2016-11-28T09:56:24.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java虚拟机 运行时数据区">
+<meta name="twitter:description" content="java虚拟机在执行程序时，把它管理的内存分为若干数据区域。这些区域都有各自的用途、创建和销毁的时间，有一些是随虚拟机的启动而创建，随虚拟机的退出而销毁，有些则是与线程一一对应，随线程的开始和结束而创建和销毁。">
+<meta name="twitter:image" content="http://7xvh4i.com1.z0.glb.clouddn.com/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://my.oschina.net/u/588736/blog/2016/06/15/java_runtime_dataarea/"/>
+
+
+  <title> Java虚拟机 运行时数据区 | 晚来风 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">晚来风</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">林花谢了春红，太匆匆。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java虚拟机 运行时数据区
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-15T08:00:28+08:00" content="2016-06-15">
+              2016-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>java虚拟机在执行程序时，把它管理的内存分为若干数据区域。这些区域都有各自的用途、创建和销毁的时间，有一些是随虚拟机的启动而创建，随虚拟机的退出而销毁，有些则是与线程一一对应，随线程的开始和结束而创建和销毁。<br><a id="more"></a><br><img src="http://7xvh4i.com1.z0.glb.clouddn.com/java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.jpg" alt=""></p>
+<ol>
+<li>由所有线程共享的数据区   <ul>
+<li>方法区(Method Area)</li>
+<li>堆(heap)</li>
+<li>执行引擎</li>
+<li>本地库接口</li>
+</ul>
+</li>
+<li>线程隔离的数据区<ul>
+<li>虚拟机栈(VM Stack)</li>
+<li>本地方法栈(Native Method Stack)</li>
+<li>程序计数器(Program Counter Register)</li>
+</ul>
+</li>
+</ol>
+<p><strong>一些概念说明</strong><br>[1] <strong><em>程序计数器</em></strong>：一块较小的内存区域，指向当前所执行的字节码。如果线程正在执行一个方法，这个计数器记录正在执行的虚拟机字节码指令的地址；如果执行的是Native方法，这个计数器的值为空(undefined)。每个JVM线程都有自己的PC寄存器，线程之间互不影响，独立存储，这类内存区被称为“线程私有”内存，在任意时刻，一条JVM线程只会执行一个方法的代码，该方法称为该线程的当前方法(CurrentMethod)。此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。<br>[2] <strong><em>java虚拟机栈</em></strong>：线程私有，其生命周期和线程一致。虚拟机栈描述的是java方法执行的内存模型，每个方法执行时都会创建一个栈帧用于存储局部变量表、操作数栈、动态链接和方法出口等信息。每一个方法被调用直至执行完成的过程就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。java虚拟机栈被实现成固定大小，也可以根据计算动态扩展。如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError；如果虚拟机栈可以动态扩展，但是在尝试扩展时无法申请到足够的内存时抛出OutOfMemoryError。<br>[3] <strong><em>本地方法栈</em></strong>：和java虚拟机栈类似，只不过它是为Native方法服务。虚拟机规范对于本地方法栈中使用的语言、使用方式和数据结构没有强制规定，甚至有的虚拟机（如HotSpot）直接把二者合为一体。<br>[4] <strong><em>java堆</em></strong>：java虚拟机管理内存中最大的一块，被<strong>所有线程共享</strong>，在虚拟机启动时创建，该区域用于存放对象实例，几乎所有的对象都在该区域分配。java堆是内存回收的主要区域，由GC（Garbage Collector）所管理，从内存回收角度来看，由于现在的收集器大都采用分代收集算法，故java堆还可以分为：<strong>新生代</strong>和<strong>老年代</strong>，再细分的话可以分为：<strong>Eden空间</strong>、<strong>From Survivor空间</strong>、<strong>To Survivor空间</strong>。java堆的容量可以固定大小，也可以随着需求动态扩展(-Xms和-Xmx)，并在不需要过多空间时自动收缩。根据java虚拟机规范规定，java堆可以处理物理上不连续的空间，只要逻辑上连续即可。<br>[5] <strong><em>方法区</em></strong>：和堆一样被各个线程共享，用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。虽然这个区域被虚拟机规范把方法区描述为堆的一个逻辑部分，但是它的别名叫非堆，用来与堆做区别。和堆一样，方法区也是在虚拟机启动的时候创建，方法区的容量可以是固定大小的，也可以随着程序执行的需求动态扩展，并在不需要过多空间时自动收缩。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test2</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> Test2 t2 = <span class="keyword">new</span> Test2(); <span class="comment">//JVM将Test2类信息加载到方法区,new Test2()实例保存在堆区,Test2引用保存在栈区</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>[6] <strong><em>运行时常量池</em></strong>：是方法区的一部分，.class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息就是常量池，它用于存放编译器生成的各种字面量和符号引用。<br>用的比较多的就是String类的intern()方法。<br>补充：String是一种特殊的对象类型，所以默认值为null，new String()创建的字符串不是常量，不能在编译时就确定，所以不放入常量池中，它有自己的地址空间(Heap?)。.class文件中的常量池，在运行期被jvm装载，并且可以被扩充，intern()方法就是扩充常量池的一个方法。当一个String对象调用intern()方法时，会查出常量池中是否有相同的Unicode的字符串常量，若有，则返回引用；若没有，则在常量池中增加一个Unicode等于该实例字符串，并返回它的引用。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">intern</span><span class="params">()</span></span></div><div class="line"><span class="comment">//这个方法是一个 native 的方法</span></div><div class="line"><span class="comment">//如果常量池中存在当前字符串, 就会直接返回当前字符串. 如果常量池中没有此字符串, 会将此字符串放入常量池中后, 再返回。</span></div></pre></td></tr></table></figure></p>
+<p>看一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">		String s1 = <span class="string">"hello"</span>;  <span class="comment">//s1为常量，编译时就确定，放在常量池中</span></div><div class="line">		String s2 = <span class="keyword">new</span> String(<span class="string">"hello"</span>);  <span class="comment">//s2为String对象</span></div><div class="line">		System.out.println(s1 == s2);</div><div class="line"></div><div class="line">		s2.intern();</div><div class="line">		System.out.println(s1 == s2);</div><div class="line"></div><div class="line">		s2 = s2.intern(); <span class="comment">//把常量池中的"hello"引用赋值给s2</span></div><div class="line">		System.out.println(s1 == s2);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>程序运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">false</div><div class="line">false</div><div class="line">true</div></pre></td></tr></table></figure></p>
+<p>[7]<strong><em>直接内存</em></strong>：并不是虚拟机运行时数据区的一部分，也不是java虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用，而且也可能会导致OutOfMemoryError。JDK1.4加的NIO中，ByteBuffer有个方法是allocateDirect(int capacity)，这是一种基于通道(Channel)与缓冲区(Buffer)的I/O方式，它可以使用Native函数库直接分配对外内存，然后通过一个存储在Java堆里面的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了java堆中来回复制数据。显然，本机直接内存的分配不会受到堆大小的限制，但是，既然是内存，肯定会受到本机总内存（包括RAM及SWAP区或者分页文件）大小以及处理器寻址空间的限制。服务器管理员配置虚拟机参数时，一般会根据实际内存设置-Xmx等参数信息，但经常会忽略掉直接内存，使得各个区域的总和大于物理内存的限制（包括物理上的和操作系统级的限制），从而导致动态扩展时出现OutOfMemoryError。  </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/10/dynamic_proxy/" rel="next" title="JDK动态代理">
+                <i class="fa fa-chevron-left"></i> JDK动态代理
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/29/something_interested/" rel="prev" title="随手记_多态">
+                随手记_多态 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LenhartG" />
+          <p class="site-author-name" itemprop="name">LenhartG</p>
+          <p class="site-description motion-element" itemprop="description">美国《时代周刊》2006年度风云人物</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gxjares" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2526255830" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=208889&auto=1&height=66"></iframe>
+</div>
+<div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LenhartG</span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+-->
+
+<!--
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

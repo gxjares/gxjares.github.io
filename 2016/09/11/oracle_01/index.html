@@ -1,0 +1,673 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="oracle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="【Reference】　　在Oracle数据库中，主要有两种日志操作模式，分别为非归档模式与归档模式。默认情况下，数据库采用的是非归档模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle日志操作模式(归档模式和非归档模式的利与弊">
+<meta property="og:url" content="https://my.oschina.net/u/588736/blog/2016/09/11/oracle_01/index.html">
+<meta property="og:site_name" content="晚来风">
+<meta property="og:description" content="【Reference】　　在Oracle数据库中，主要有两种日志操作模式，分别为非归档模式与归档模式。默认情况下，数据库采用的是非归档模式。">
+<meta property="og:updated_time" content="2016-11-28T09:56:24.966Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle日志操作模式(归档模式和非归档模式的利与弊">
+<meta name="twitter:description" content="【Reference】　　在Oracle数据库中，主要有两种日志操作模式，分别为非归档模式与归档模式。默认情况下，数据库采用的是非归档模式。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://my.oschina.net/u/588736/blog/2016/09/11/oracle_01/"/>
+
+
+  <title> Oracle日志操作模式(归档模式和非归档模式的利与弊 | 晚来风 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">晚来风</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">林花谢了春红，太匆匆。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Oracle日志操作模式(归档模式和非归档模式的利与弊
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T00:00:00+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://www.jb51.net/article/33221.htm" target="_blank" rel="external">【Reference】</a><br>　　在Oracle数据库中，主要有两种日志操作模式，分别为非归档模式与归档模式。默认情况下，数据库采用的是非归档模式。</p>
+<a id="more"></a>
+<h2 id="非归档日志模式"><a href="#非归档日志模式" class="headerlink" title="非归档日志模式"></a>非归档日志模式</h2><p>　　非归档模式是指不保留重做历史的日志操作模式，只能够用于保护例程失败，而不能够保护介质损坏。如果数据库采用的是日志操作模式的话，则进行日志切换时，新的日志会直接覆盖原有日志文件的内容，不会保留原有日志文件中的数据。举个简单的例子：现在Oracle数据库中有四个日志组，日志序列号分别为11、 12、13、14。当数据库事务变化写满第一个日志组文件(序列号为11)时，Oracle数据库就会自动切换到第二个日志组文件(序列号为12)中。依次类推。当第三个日志组文件(序列号为13)写满时，就会切换到第四个日志组(序列号为14)。当第四个日志组(序列号为14)满时，其就会切换到第一个日志组(序列号为15)。这里，序列号虽然与刚才第一个日志文件组不同，但是日志组仍然是同一个。此时，由于数据库的操作模式选择为非归档模式，所以第一组日志文件(序列号为11)中的内容并没有归档。新的日志文件的内容将直接覆盖第一个日志组文件中的内容。若第一个日志组文件(序列号为15)满时，切换到第二个日志文件组时，新的内容又会在第二个日志文件组没有归档的情况下，直接覆盖日志文件12中的原有数据。  </p>
+<h3 id="非归档日志模式的特点"><a href="#非归档日志模式的特点" class="headerlink" title="非归档日志模式的特点"></a>非归档日志模式的特点</h3><ul>
+<li><p>一是当检查点完成之后，后台进程可以覆盖原有重做日志的内容。也就是说，在日志切换时，后来的日志文件内容可以在以前的日志文件内容没有归档的情况下，覆盖原有日志文件的内容。如此的话，当出现数据文件损坏时，数据库管理员只能够恢复到过去的完全被分点。如数据库有四个日志组。如果在日志组序列号为16的时候数据库管理员进行了完全备份。而在日志组序列号为28的时候数据文件出现了损坏。此时，由于中间的日志文件内容被覆盖掉了。所以，此时数据库管理员只能够恢复到完全备份的那个点，而不能够恢复数据库文件损坏时的点的数据(即序列号为28)的数据。如果在序列号为18的时候出现了数据文件损坏的事故，则可以先对数据库进行还原(还原点为序列号为16时的数据)，然后再利用重做日志文件(序列号为17、18)，即可以把数据恢复到故障发生时的数据。故虽然不用对重做日志文件进行归档，节省磁盘空间。但是，却给后续数据库的恢复带来的麻烦，降低了数据库的安全性。为此，如何取舍，还是需要数据库管理员根据自己企业的情况，作出选择。</p>
+</li>
+<li><p>二是执行数据库备份时，必须要备份所有数据文件和控制文件。因为重做日志会被后来的所覆盖，所以，基本上数据库管理员不能够通过重做日志文件来恢复数据库的数据，或者说，通过重做日志文件不能够恢复全部的数据。为此，在执行数据库备份时，就必须备份所有的数据文件和控制文件。同时，还必须使用SHUTDOWN NORMAL等命令关闭数据库。而且做（冷）备份还原的时候，数据只能恢复到备份那一刻的，不能恢复到指定时刻的数据。</p>
+</li>
+</ul>
+<h2 id="归档日志模式"><a href="#归档日志模式" class="headerlink" title="归档日志模式"></a>归档日志模式</h2><p>　　归档日志模式与非归档日志模式相对应，是指保留重做日志历史的日志操作模式。这种日志操作模式不仅可用于保护例程失败，还可以用于保护介质损坏的情况。如果数据库管理员把日志设置为归档日志模式，则当后台进程在进行日志切换时，后台进程会自动将重做日志的内容复制到归档日志中。归档日志就是非活动重做日志的备份。例如：现在Oracle数据库中有四个日志组，日志序列号分别为11、12、13、14。当数据库事务变化写满第一个日志组文件(序列号为11) 时，后台进程就会切换到第二个日志组中(序列号为12)。不过在这个切换之前，数据库有一个进程，会负责将第一个日志组中的文件内容复制到归档日志中去。依次类推。这就是归档日志模式与非归档日志模式最本质的区别。不过这个区别却给数据库安全性带来了很大的变化。如当日志序列号为28时出现了数据文件的错误或者服务器硬盘损坏的事故时，因为日志文件中记录了从数据库备份以来所有的数据变化情况。而且这些日志文件与数据库备份文件存储在其他媒体中，那么数据库管理员就可以通过这些资料，把数据库恢复到介质损坏时(即日志文件序列号为28)的数据。从保护数据库数据的角度讲，这是一个接近于比较理想的状态了。</p>
+<h3 id="归档日志模式的特点"><a href="#归档日志模式的特点" class="headerlink" title="归档日志模式的特点"></a>归档日志模式的特点</h3><ul>
+<li><p>一是当出现介质损坏(如硬盘损坏或者意外删除数据文件)或者出现例程失败(如服务器突然断电)时，数据库管理员可以凭借归档日志文件来防止丢失数据。而非归档模式则往往只能够应对例程失败的情况。所以，其应用范围要比非归档模式大的多。</p>
+</li>
+<li><p>二是数据备份的限制条件。正如上面所说的，如果数据库处于非归档模式，则对数据库进行备份时，要先用SHUTDOWN NORMAL等命令关闭数据库。而处于归档模式的时候，则当数据库处于Open状态时，数据库管理员仍然可以备份数据库，而且不会影响数据库的正常使用。除了数据库备份两者有本质上的差异之外，在数据库恢复上也有很大的差别。若数据库采用归档日志模式，不仅可以执行完全恢复，而且在归档日志文件的帮助下，还可以将数据库恢复到特定的点。从而当数据库出现意外故障时，最大限度的保护数据的安全性。不过若采取归档模式的话，则必须要牺牲一定的磁盘空间。</p>
+</li>
+</ul>
+<h2 id="如何选择合适的日志操作模式"><a href="#如何选择合适的日志操作模式" class="headerlink" title="如何选择合适的日志操作模式"></a>如何选择合适的日志操作模式</h2><p>　　非归档模式只适用于例程失败时恢复数据，不能够用来保护介质损坏。即当数据库的数据文件意外损坏时，非归档模式没有应对之策。归档模式不仅可以用来保护例程失败，而且还可以在介质失败的时候，最大程度的恢复数据库的原有数据。此时，数据库管理员可以利用数据库备份文件、归档日志文件、重做日志文件等把数据库中的数据恢复到故障发生的那一时点。</p>
+<p>　　既然归档操作模式与非归档操作模式各有各的特点，那么在什么时候采用归档日志模式为好，什么时候又该采用非归档模式呢?</p>
+<ul>
+<li><p>首先要看数据库中数据变化的频繁程度。当数据库中数据变化比较少的时候，则最好采用非归档模式。相反，如果数据库中的数据变化比较频繁，如一些业务操作系统，则最好能够采用归档模式。</p>
+</li>
+<li><p>其次，要看企业对数据丢失的态度。如果企业对于数据安全要求比较高，如银行，不允许丢失任何数据，则最好能够采用归档日志模式。在数据库意外故障的时候，其可以帮助数据库管理员在最大程度上恢复数据。同理，当企业可以允许部分损坏数据的时候，则可以采用非归档模式，以节省切换日志组时的对日志文件备份的额外开销与磁盘空间。</p>
+</li>
+<li><p>再者，要看看数据库是否需要全天候运行。因为在非归档模式下，必须利用SHUTDOWNNORMAL等命令关闭数据库，才能过对数据库进行备份。这跟数据库全天候运行的要求是不符合的。而归档模式下，即使数据库出于OPEN状态，也可以对其进行备份，也不会影响数据库的正常运行。为此，若果数据库需要全天候运行的话，则最好采用归档模式。虽然数据库为此要付出一些额外的开销，但也是值得的。毕竟硬件投资有价，数据无价。</p>
+</li>
+</ul>
+<p>　　数据库管理员要根据企业的实际情况，选择合适的日志操作模式。从而让重做日志与归档日志真正成为Oracle数据库的保护伞。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>Oracle 的日志模式分为 archivelog (启用归档日志) 和 noarchivelog () 两种模式。<br>查看数据库日志模式：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> log_mode <span class="keyword">from</span> v$<span class="keyword">database</span>;</div><div class="line"></div><div class="line">log_mode</div><div class="line"><span class="comment">-----------------------------------</span></div><div class="line">archivelog</div></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">SQL&gt; archive log list; </div><div class="line">Database log mode    No Archive Mode </div><div class="line">Automatic archival    Disabled </div><div class="line">Archive destination    USE_DB_RECOVERY_FILE_DEST </div><div class="line">Oldest online log sequence  8 </div><div class="line">Current log sequence  10</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/oracle/" rel="tag">#oracle</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/05/gitbash_common/" rel="next" title="Git for Windows">
+                <i class="fa fa-chevron-left"></i> Git for Windows
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/14/oracle_02/" rel="prev" title="Oracle数据库冷备">
+                Oracle数据库冷备 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LenhartG" />
+          <p class="site-author-name" itemprop="name">LenhartG</p>
+          <p class="site-description motion-element" itemprop="description">美国《时代周刊》2006年度风云人物</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gxjares" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2526255830" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#非归档日志模式"><span class="nav-number">1.</span> <span class="nav-text">非归档日志模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非归档日志模式的特点"><span class="nav-number">1.1.</span> <span class="nav-text">非归档日志模式的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档日志模式"><span class="nav-number">2.</span> <span class="nav-text">归档日志模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#归档日志模式的特点"><span class="nav-number">2.1.</span> <span class="nav-text">归档日志模式的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何选择合适的日志操作模式"><span class="nav-number">3.</span> <span class="nav-text">如何选择合适的日志操作模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=208889&auto=1&height=66"></iframe>
+</div>
+<div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LenhartG</span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+-->
+
+<!--
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

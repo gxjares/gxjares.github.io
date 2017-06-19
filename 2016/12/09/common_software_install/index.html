@@ -1,0 +1,705 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Linux环境配置中的一些常用软件安装步骤">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用软件安装">
+<meta property="og:url" content="https://my.oschina.net/u/588736/blog/2016/12/09/common_software_install/index.html">
+<meta property="og:site_name" content="晚来风">
+<meta property="og:description" content="Linux环境配置中的一些常用软件安装步骤">
+<meta property="og:updated_time" content="2016-12-15T02:27:55.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用软件安装">
+<meta name="twitter:description" content="Linux环境配置中的一些常用软件安装步骤">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://my.oschina.net/u/588736/blog/2016/12/09/common_software_install/"/>
+
+
+  <title> 常用软件安装 | 晚来风 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">晚来风</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">林花谢了春红，太匆匆。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                常用软件安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-09T14:26:41+08:00" content="2016-12-09">
+              2016-12-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Linux环境配置中的一些常用软件安装步骤</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="安装编译器"><a href="#安装编译器" class="headerlink" title="安装编译器"></a>安装编译器</h1><h2 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /etc/yum.repos.d</div><div class="line">[root@server ]# wget http://www.linuxidc.com/files/2011/05/06/CentOS-Base.repo</div><div class="line">[root@server ]# mv rhel-debuginfo.repo rhel-debuginfo.repo.bak</div><div class="line">[root@server ]# mv CentOS-Base.repo rhel-debuginfo.repo</div></pre></td></tr></table></figure>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@server ]# yum install -y gcc gcc-c++</div></pre></td></tr></table></figure>
+<h1 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h1><h2 id="yum安装"><a href="#yum安装" class="headerlink" title="yum安装"></a>yum安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@server ]# yum install java-1.7.0-openjdk* -y</div></pre></td></tr></table></figure>
+<h2 id="rpm安装"><a href="#rpm安装" class="headerlink" title="rpm安装"></a>rpm安装</h2><p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">官网</a><a href="http://download.oracle.com/otn-pub/java/jdk/8u111-b14/jdk-8u111-linux-x64.rpm" target="_blank" rel="external">下载rpm包</a> 安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# rpm -ivh jdkxxx.rpm</div></pre></td></tr></table></figure></p>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><h4 id="先查看jdk在linux中的安装目录"><a href="#先查看jdk在linux中的安装目录" class="headerlink" title="先查看jdk在linux中的安装目录"></a>先查看jdk在linux中的安装目录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# ls /usr/java/</div><div class="line">default jdk1.7.0_02  latest</div></pre></td></tr></table></figure>
+<p>可见目录为/usr/java/jdk1.7.0_02 ，JAVA_HOME的值就是这个值。</p>
+<p>在/etc/profile文件末尾加入以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/java/jdk1.7.0_02</div><div class="line">export PATH=$JAVA_HOME/bin:$PATH</div><div class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tool.jar</div></pre></td></tr></table></figure></p>
+<p>设置完成后，退出，使用<code>source /etc/profile</code>使命使设置生效。</p>
+<h1 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h1><p>Nginx需要依赖下面3个包: zlib、openssl、pcre</p>
+<h2 id="zlib"><a href="#zlib" class="headerlink" title="zlib"></a>zlib</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p><a href="http://prdownloads.sourceforge.net/libpng/zlib-1.2.8.tar.gz?download" target="_blank" rel="external">zlib-1.2.8.tar.gz</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/src</div><div class="line">wget http://zlib.net/zlib-1.2.8.tar.gz</div><div class="line"></div><div class="line"># 解压</div><div class="line">[root@server ]# tar -xzvf zlib-1.2.8.tar.gz</div></pre></td></tr></table></figure></p>
+<h3 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd zlib-1.2.8</div><div class="line">[root@server ]# ./configure</div><div class="line">[root@server ]# make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<h2 id="openssl"><a href="#openssl" class="headerlink" title="openssl"></a>openssl</h2><h3 id="查看openssl版本"><a href="#查看openssl版本" class="headerlink" title="查看openssl版本"></a>查看openssl版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# openssl version</div><div class="line">OpenSSL 0.9.8e-fips-rhel5 01 Jul 2008</div></pre></td></tr></table></figure>
+<blockquote>
+<p>若opensslopenssl库的版本在1.0.1以下，则需要更新openssl（适配https支持TLS 2.0）</p>
+</blockquote>
+<h3 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/src</div><div class="line">[root@server ]# wget https://www.openssl.org/source/openssl-1.0.2j.tar.gz</div></pre></td></tr></table></figure>
+<h3 id="解压安装"><a href="#解压安装" class="headerlink" title="解压安装"></a>解压安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@server ]# tar -xzvf openssl-1.0.2j.tar.gz</div><div class="line">[root@server ]# cd  openssl-1.0.2j</div><div class="line">[root@server ]# ./config shared zlib</div><div class="line">[root@server ]# make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 修改之前对旧的OpenSSL文件设置备份</div><div class="line">[root@server ]# mv /usr/bin/openssl /usr/bin/openssl.old</div><div class="line">[root@server ]# mv /usr/include/openssl /usr/include/openssl.old</div><div class="line"></div><div class="line"># 设置软连接使其使用新的OpenSSL版本 刚刚安装的OpenSSL默认安装在/usr/local/ssl</div><div class="line">[root@server ]# ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl</div><div class="line">[root@server ]# ln -s /usr/local/ssl/include/openssl /usr/include/openssl</div><div class="line"></div><div class="line"># 更新动态链接库数据</div><div class="line">[root@server ]# echo &quot;/usr/local/ssl/lib&quot; &gt;&gt; /etc/ld.so.conf</div><div class="line">[root@server ]# ldconfig -v</div></pre></td></tr></table></figure>
+<h3 id="更新后"><a href="#更新后" class="headerlink" title="更新后"></a>更新后</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server]# openssl version</div><div class="line">OpenSSL 1.0.2j  26 Sep 2016</div></pre></td></tr></table></figure>
+<h2 id="pcre"><a href="#pcre" class="headerlink" title="pcre"></a>pcre</h2><p><a href="http://www.linuxfromscratch.org/blfs/view/svn/general/pcre.html" target="_blank" rel="external">pcre</a></p>
+<h3 id="下载-1"><a href="#下载-1" class="headerlink" title="下载"></a>下载</h3><p><a href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.bz2" target="_blank" rel="external">pcre-8.38.tar.bz2</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/src</div><div class="line">[root@server ]# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.bz2</div><div class="line"></div><div class="line"># 解压</div><div class="line">[root@server ]# tar -jzvf pcre-8.38.tar.gz</div></pre></td></tr></table></figure></p>
+<h3 id="编译安装-1"><a href="#编译安装-1" class="headerlink" title="编译安装"></a>编译安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd pcre-8.38</div><div class="line">[root@server ]# ./configure</div><div class="line">[root@server ]# make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><h3 id="下载-2"><a href="#下载-2" class="headerlink" title="下载"></a>下载</h3><p><a href="http://nginx.org/en/download.html" target="_blank" rel="external">nginx</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/src</div><div class="line">[root@server ]# wget http://nginx.org/download/nginx-1.9.9.zip</div><div class="line"></div><div class="line"># 解压</div><div class="line">[root@server ]# tar -xzvf nginx-1.9.9.tar.gz</div></pre></td></tr></table></figure></p>
+<h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd nginx-1.9.9</div><div class="line">[root@server ]# groupadd nginx</div><div class="line">[root@server ]# useradd nginx -g nginx</div><div class="line">[root@server ]# ./configure --sbin-path=/usr/local/nginx/nginx \</div><div class="line">--conf-path=/etc/nginx/nginx.conf \</div><div class="line">--pid-path=/usr/local/nginx/nginx.pid \</div><div class="line">--with-http_ssl_module \</div><div class="line">--with-pcre=../pcre-8.38 \</div><div class="line">--with-zlib=../zlib-1.2.8 \</div><div class="line">--with-openssl=../openssl-1.0.2j \</div><div class="line">--with-http_stub_status_module \</div><div class="line">--user=nginx \</div><div class="line">--group=nginx;</div><div class="line"></div><div class="line">[root@server ]# make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# mkdir /etc/nginx/</div><div class="line">[root@server ]# cp /usr/local/nginx/conf/nginx.conf /etc/nginx/</div></pre></td></tr></table></figure>
+<p>编辑/etc/profile文件，添加nginx到环境变量，并设置生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">“</div><div class="line">export PATH=$PATH:/usr/local/nginx</div><div class="line">”</div><div class="line"></div><div class="line">[root@server ]# . /etc/profile</div></pre></td></tr></table></figure></p>
+<h3 id="测试配置文件，启动nginx"><a href="#测试配置文件，启动nginx" class="headerlink" title="测试配置文件，启动nginx"></a>测试配置文件，启动nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# nginx -t</div><div class="line">[root@server ]# nginx</div></pre></td></tr></table></figure>
+<h1 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h1><h2 id="下载-3"><a href="#下载-3" class="headerlink" title="下载"></a>下载</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/src/</div><div class="line">[root@server ]# wget http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-7/v7.0.73/bin/apache-tomcat-7.0.73.tar.gz</div></pre></td></tr></table></figure>
+<h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@server ]# tar -xzvf apache-tomcat-7.0.73.tar.gz</div><div class="line">[root@server ]# mv apache-tomcat-7.0.73 /usr/local/</div><div class="line">[root@server apache-tomcat-7.0.73]# pwd</div><div class="line">/usr/local/apache-tomcat-7.0.73</div></pre></td></tr></table></figure>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="使用yum安装redis"><a href="#使用yum安装redis" class="headerlink" title="使用yum安装redis"></a>使用yum安装redis</h2><h3 id="安装redis源"><a href="#安装redis源" class="headerlink" title="安装redis源"></a>安装redis源</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</div><div class="line">rpm -ivh epel-release-6-8.noarch.rpm</div><div class="line"></div><div class="line"># 安装redis</div><div class="line">yum -y install redis</div></pre></td></tr></table></figure>
+<h2 id="编译方式安装"><a href="#编译方式安装" class="headerlink" title="编译方式安装"></a>编译方式安装</h2><h3 id="下载安装包-1"><a href="#下载安装包-1" class="headerlink" title="下载安装包"></a>下载安装包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/src/</div><div class="line">[root@server src]# wget http://download.redis.io/releases/redis-3.2.5.tar.gz</div></pre></td></tr></table></figure>
+<h3 id="解压安装-1"><a href="#解压安装-1" class="headerlink" title="解压安装"></a>解压安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@server ]# tar -xzvf redis-3.2.5.tar.gz</div><div class="line">[root@server ]# cd ..</div><div class="line">[root@server ]# mv src/redis-3.2.5 .</div><div class="line">[root@server ]# cd redis-3.2.5</div><div class="line">[root@server ]# make</div><div class="line">[root@server ]# make install</div></pre></td></tr></table></figure>
+<p><code>make install</code>命令执行完成后，会在<code>/usr/local/bin</code>目录下生成可执行文件</p>
+<h3 id="修改redis配置文件"><a href="#修改redis配置文件" class="headerlink" title="修改redis配置文件"></a>修改redis配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cp redis.conf /etc/</div><div class="line">[root@server ]# vim /etc/redis.conf</div><div class="line">“</div><div class="line"># 设置ip绑定（当前安装机器的IP为192.168.1.12）</div><div class="line">bind 127.0.0.1 192.168.1.12</div><div class="line"></div><div class="line"># 使进程在后台运行</div><div class="line">daemonize yes</div><div class="line"></div><div class="line"># 日志文件路径</div><div class="line">logfile &quot;/var/log/redis.log&quot;</div><div class="line"></div><div class="line"># 目前redis中保存的数据主要是session，对数据的完整性要求不是很高，故配置采用的是rdb快照模式备份数据，这样性能会比较高</div><div class="line">#Redis持久化数据到磁盘时如果出现失败会停止接受所有的写请求，关闭的话Redis会继续写请求，如果下一次RDB持久化成功，redis会自动恢复接受写请求。</div><div class="line">stop-writes-on-bgsave-error yes</div><div class="line"># 磁盘容量够的话关闭压缩存储，减少cpu消耗</div><div class="line">rdbcompression no</div><div class="line"># 数据校验，关闭可以获得性能提</div><div class="line">rdbchecksum no</div><div class="line"># 数据快照文件名</div><div class="line">dbfilename dump.rdb</div><div class="line"># 数据快照的保存目录(若文件夹不存在，需要手动创建)</div><div class="line">dir /usr/local/redis-3.2.5/rdbbackup/</div><div class="line"></div><div class="line"># 密码</div><div class="line">requirepass yourpassword</div><div class="line">”</div></pre></td></tr></table></figure>
+<h3 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@server ]# redis-server /etc/redis.conf</div></pre></td></tr></table></figure>
+<h1 id="安装MySql"><a href="#安装MySql" class="headerlink" title="安装MySql"></a>安装MySql</h1><h2 id="解压方式安装"><a href="#解压方式安装" class="headerlink" title="解压方式安装"></a>解压方式安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server]# rpm --version</div><div class="line">RPM version 4.4.2.3</div></pre></td></tr></table></figure>
+<blockquote>
+<p>由于rpm版本太低，无法使用rpm方式安装，故使用解压方式安装mysql-5.6.13  </p>
+</blockquote>
+<h3 id="获取软件包"><a href="#获取软件包" class="headerlink" title="获取软件包"></a>获取软件包</h3><p>从<a href="http://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">官网下载页面</a>下载<br>-&gt; <code>Select Platform: Linux-Generic</code><br>-&gt; <code>Linux - Generic (glibc 2.5) (x86, 64-bit), Compressed TAR Archive</code><br>获取下载地址，并下载：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/src/</div><div class="line">[root@server ]# wget http://101.96.10.43/dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz</div></pre></td></tr></table></figure></p>
+<h3 id="解压-1"><a href="#解压-1" class="headerlink" title="解压"></a>解压</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# tar -xzvf mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz</div><div class="line">[root@server ]# mv mysql-5.7.16-linux-glibc2.5-x86_64 /usr/local/mysql</div></pre></td></tr></table></figure>
+<h3 id="在mysql下面创建data数据库文件目录"><a href="#在mysql下面创建data数据库文件目录" class="headerlink" title="在mysql下面创建data数据库文件目录"></a>在mysql下面创建data数据库文件目录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/mysql</div><div class="line">[root@server ]# mkdir data</div></pre></td></tr></table></figure>
+<h3 id="创建mysql用户组和用户，并将mysql目录改变到用户组和用户下"><a href="#创建mysql用户组和用户，并将mysql目录改变到用户组和用户下" class="headerlink" title="创建mysql用户组和用户，并将mysql目录改变到用户组和用户下"></a>创建mysql用户组和用户，并将mysql目录改变到用户组和用户下</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@server ]# groupadd mysql</div><div class="line">[root@server ]# useradd mysql -g mysql</div><div class="line">[root@server ]# chown -R mysql .</div><div class="line">[root@server ]# chgrp -R mysql .</div></pre></td></tr></table></figure>
+<h3 id="初始化mysql"><a href="#初始化mysql" class="headerlink" title="初始化mysql"></a>初始化mysql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cd /usr/local/mysql/bin</div><div class="line">[root@server ]# ./mysql_install_db --user=mysql --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data</div></pre></td></tr></table></figure>
+<h3 id="添加mysqld服务，并设置开机启动"><a href="#添加mysqld服务，并设置开机启动" class="headerlink" title="添加mysqld服务，并设置开机启动"></a>添加mysqld服务，并设置开机启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cp /usr/local/mysql/support-files/mysql.server  /etc/init.d/mysqld</div><div class="line">[root@server ]# chkconfig --add mysqld</div></pre></td></tr></table></figure>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cp /usr/local/mysql/support-files/my-default.cnf /etc/my.cnf</div><div class="line"></div><div class="line">[root@server ]# vim /etc/my.cnf</div><div class="line"># 修改添加配置</div><div class="line">“</div><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">character-set-server=utf8</div><div class="line">basedir=/usr/local/mysql</div><div class="line">datadir=/usr/local/mysql/data</div><div class="line">socket=/tmp/mysql.sock</div><div class="line"></div><div class="line">[mysqld_safe]</div><div class="line"># 先创建文件夹/usr/local/mysql/log</div><div class="line">log-error=/usr/local/mysql/log/mysqld.log</div><div class="line">”</div></pre></td></tr></table></figure>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vim /etc/profile</div><div class="line"># 添加</div><div class="line">“</div><div class="line">export PATH=$PATH:/usr/local/mysql/bin</div><div class="line">”</div><div class="line"></div><div class="line"># 生效</div><div class="line">[root@server ]# . /etc/profile</div></pre></td></tr></table></figure>
+<h3 id="启动mysqld服务，查看服务状态"><a href="#启动mysqld服务，查看服务状态" class="headerlink" title="启动mysqld服务，查看服务状态"></a>启动mysqld服务，查看服务状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@server ]# service mysqld start</div><div class="line">[root@server ]# service mysqld status</div></pre></td></tr></table></figure>
+<h3 id="获取初始密码"><a href="#获取初始密码" class="headerlink" title="获取初始密码"></a>获取初始密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@server ]# cat /root/.mysql_secret</div><div class="line"># Password set for user &apos;root@localhost&apos; at 2016-12-05 18:31:54</div><div class="line">EWrwa*sysL-B</div></pre></td></tr></table></figure>
+<h3 id="连接mysql，并修改密码"><a href="#连接mysql，并修改密码" class="headerlink" title="连接mysql，并修改密码"></a>连接mysql，并修改密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[root@server ]# mysql -uroot -pEWrwa*sysL-B</div><div class="line"></div><div class="line"># 修改密码</div><div class="line">mysql&gt; SET PASSWORD = PASSWORD(&apos;MyNewPass4!&apos;);</div><div class="line">mysql&gt; flush privileges;</div><div class="line">mysql&gt; exit</div><div class="line"></div><div class="line"># 测试新密码</div><div class="line">[root@server ]# mysql -uroot -pMyNewPass4!</div></pre></td></tr></table></figure>
+<h2 id="rpm安装MySql"><a href="#rpm安装MySql" class="headerlink" title="rpm安装MySql"></a>rpm安装MySql</h2><h3 id="下载-4"><a href="#下载-4" class="headerlink" title="下载"></a>下载</h3><p><a href="http://www.mysql.com/" target="_blank" rel="external">官网</a>下载rpm集合包：mysql-5.7.15-1.el6.x86_64.rpm-bundle.tar</p>
+<h3 id="解压-2"><a href="#解压-2" class="headerlink" title="解压"></a>解压</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@server ]# tar -xvf mysql-5.7.15-1.el6.x86_64.rpm-bundle.tar</div><div class="line">mysql-community-libs-5.7.15-1.el6.x86_64.rpm</div><div class="line">mysql-community-common-5.7.15-1.el6.x86_64.rpm</div><div class="line">mysql-community-devel-5.7.15-1.el6.x86_64.rpm</div><div class="line">mysql-community-server-5.7.15-1.el6.x86_64.rpm</div><div class="line">mysql-community-embedded-5.7.15-1.el6.x86_64.rpm</div><div class="line">mysql-community-client-5.7.15-1.el6.x86_64.rpm</div><div class="line">mysql-community-embedded-devel-5.7.15-1.el6.x86_64.rpm</div><div class="line">mysql-community-test-5.7.15-1.el6.x86_64.rpm</div><div class="line">mysql-community-libs-compat-5.7.15-1.el6.x86_64.rpm</div></pre></td></tr></table></figure>
+<h3 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h3><p>安装mysql-server服务，只需要安装如下4个软件包即可，可以使用rpm -ivh命令进行安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[root@server ]# rpm -ivh mysql-community-common-5.7.15-1.el6.x86_64.rpm</div><div class="line">[root@server ]# rpm -ivh mysql-community-libs-5.7.15-1.el6.x86_64.rpm</div><div class="line">[root@server ]# rpm -ivh mysql-community-client-5.7.15-1.el6.x86_64.rpm</div><div class="line">[root@server ]# rpm -ivh mysql-community-server-5.7.15-1.el6.x86_64.rpm</div><div class="line"></div><div class="line"># 安装server可能会报错</div><div class="line">“</div><div class="line">error: Failed dependencies:</div><div class="line">        libnuma.so.1()(64bit) is needed by mysql-community-server-5.7.15-1.el6.x86_64</div><div class="line">”</div><div class="line"></div><div class="line"># 解决</div><div class="line">[root@server ]# yum install numactl</div><div class="line"></div><div class="line"># 最后也安装一下开发包，可能某些场景会用到</div><div class="line">[root@server ]# rpm -ivh mysql-community-devel-5.7.15-1.el6.x86_64.rpm</div></pre></td></tr></table></figure></p>
+<h3 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h3><p>执行生会在/var/log/mysqld.log生成随机密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@server ]# mysqld --initialize</div></pre></td></tr></table></figure></p>
+<h3 id="更改mysql数据库目录的所属用户及其所属组"><a href="#更改mysql数据库目录的所属用户及其所属组" class="headerlink" title="更改mysql数据库目录的所属用户及其所属组"></a>更改mysql数据库目录的所属用户及其所属组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@server ]# chown -R mysql:mysql /var/lib/mysql</div></pre></td></tr></table></figure>
+<h3 id="启动mysql数据库"><a href="#启动mysql数据库" class="headerlink" title="启动mysql数据库"></a>启动mysql数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@server ]# service mysqld start</div><div class="line"></div><div class="line"># 从/var/log/mysqld.log中查找初始化的密码，登录数据库</div><div class="line"># [Note] A temporary password is generated for root@localhost: !eh;9M!)u)jD</div><div class="line">[root@server ]# mysql -uroot -p&apos;!eh;9M!)u)jD&apos;</div><div class="line"></div><div class="line"># 修改密码</div><div class="line">mysql&gt; set password=password(&apos;MyNewPass@1234&apos;);</div></pre></td></tr></table></figure>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>还可以根据实际情况创建用户，以及权限分配<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 授权用户为root从192.168.137.110以密码MyNewPass4!登录</div><div class="line">mysql&gt; create user 'root'@'192.168.137.110' identified by 'MyNewPass4!';</div><div class="line"></div><div class="line"># 所有权限</div><div class="line">mysql&gt; GRANT ALL PRIVILEGES ON dbname.* to 'root'@'192.168.137.110';</div><div class="line"></div><div class="line">mysql&gt; flush privileges</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/28/mybatis123/" rel="next" title="MyBatis与Spring整合">
+                <i class="fa fa-chevron-left"></i> MyBatis与Spring整合
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/03/jni_opencv/" rel="prev" title="Linux环境下java通过JNI调用C++程序">
+                Linux环境下java通过JNI调用C++程序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LenhartG" />
+          <p class="site-author-name" itemprop="name">LenhartG</p>
+          <p class="site-description motion-element" itemprop="description">美国《时代周刊》2006年度风云人物</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gxjares" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2526255830" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装编译器"><span class="nav-number">1.</span> <span class="nav-text">安装编译器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新源"><span class="nav-number">1.1.</span> <span class="nav-text">更新源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装jdk"><span class="nav-number">2.</span> <span class="nav-text">安装jdk</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yum安装"><span class="nav-number">2.1.</span> <span class="nav-text">yum安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm安装"><span class="nav-number">2.2.</span> <span class="nav-text">rpm安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量"><span class="nav-number">2.2.1.</span> <span class="nav-text">配置环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先查看jdk在linux中的安装目录"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">先查看jdk在linux中的安装目录</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Nginx"><span class="nav-number">3.</span> <span class="nav-text">安装Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zlib"><span class="nav-number">3.1.</span> <span class="nav-text">zlib</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载"><span class="nav-number">3.1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安装"><span class="nav-number">3.1.2.</span> <span class="nav-text">编译安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openssl"><span class="nav-number">3.2.</span> <span class="nav-text">openssl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看openssl版本"><span class="nav-number">3.2.1.</span> <span class="nav-text">查看openssl版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装包"><span class="nav-number">3.2.2.</span> <span class="nav-text">下载安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压安装"><span class="nav-number">3.2.3.</span> <span class="nav-text">解压安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">3.2.4.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新后"><span class="nav-number">3.2.5.</span> <span class="nav-text">更新后</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pcre"><span class="nav-number">3.3.</span> <span class="nav-text">pcre</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译安装-1"><span class="nav-number">3.3.2.</span> <span class="nav-text">编译安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx"><span class="nav-number">3.4.</span> <span class="nav-text">Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载-2"><span class="nav-number">3.4.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-1"><span class="nav-number">3.4.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">3.4.3.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试配置文件，启动nginx"><span class="nav-number">3.4.4.</span> <span class="nav-text">测试配置文件，启动nginx</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat"><span class="nav-number">4.</span> <span class="nav-text">Tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-3"><span class="nav-number">4.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解压"><span class="nav-number">4.2.</span> <span class="nav-text">解压</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis"><span class="nav-number">5.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用yum安装redis"><span class="nav-number">5.1.</span> <span class="nav-text">使用yum安装redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装redis源"><span class="nav-number">5.1.1.</span> <span class="nav-text">安装redis源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译方式安装"><span class="nav-number">5.2.</span> <span class="nav-text">编译方式安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装包-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">下载安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压安装-1"><span class="nav-number">5.2.2.</span> <span class="nav-text">解压安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改redis配置文件"><span class="nav-number">5.2.3.</span> <span class="nav-text">修改redis配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动redis"><span class="nav-number">5.2.4.</span> <span class="nav-text">启动redis</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装MySql"><span class="nav-number">6.</span> <span class="nav-text">安装MySql</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解压方式安装"><span class="nav-number">6.1.</span> <span class="nav-text">解压方式安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取软件包"><span class="nav-number">6.1.1.</span> <span class="nav-text">获取软件包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压-1"><span class="nav-number">6.1.2.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在mysql下面创建data数据库文件目录"><span class="nav-number">6.1.3.</span> <span class="nav-text">在mysql下面创建data数据库文件目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建mysql用户组和用户，并将mysql目录改变到用户组和用户下"><span class="nav-number">6.1.4.</span> <span class="nav-text">创建mysql用户组和用户，并将mysql目录改变到用户组和用户下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化mysql"><span class="nav-number">6.1.5.</span> <span class="nav-text">初始化mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加mysqld服务，并设置开机启动"><span class="nav-number">6.1.6.</span> <span class="nav-text">添加mysqld服务，并设置开机启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置文件"><span class="nav-number">6.1.7.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端"><span class="nav-number">6.1.8.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动mysqld服务，查看服务状态"><span class="nav-number">6.1.9.</span> <span class="nav-text">启动mysqld服务，查看服务状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取初始密码"><span class="nav-number">6.1.10.</span> <span class="nav-text">获取初始密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接mysql，并修改密码"><span class="nav-number">6.1.11.</span> <span class="nav-text">连接mysql，并修改密码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm安装MySql"><span class="nav-number">6.2.</span> <span class="nav-text">rpm安装MySql</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载-4"><span class="nav-number">6.2.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压-2"><span class="nav-number">6.2.2.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-2"><span class="nav-number">6.2.3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化数据库"><span class="nav-number">6.2.4.</span> <span class="nav-text">初始化数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改mysql数据库目录的所属用户及其所属组"><span class="nav-number">6.2.5.</span> <span class="nav-text">更改mysql数据库目录的所属用户及其所属组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动mysql数据库"><span class="nav-number">6.2.6.</span> <span class="nav-text">启动mysql数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">6.2.7.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=208889&auto=1&height=66"></iframe>
+</div>
+<div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LenhartG</span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+-->
+
+<!--
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

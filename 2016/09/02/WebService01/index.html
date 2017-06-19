@@ -1,0 +1,680 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="WebService也叫做Xml Web Service WebService，是一种可以接收从Internet或者Internet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebService">
+<meta property="og:url" content="https://my.oschina.net/u/588736/blog/2016/09/02/WebService01/index.html">
+<meta property="og:site_name" content="晚来风">
+<meta property="og:description" content="WebService也叫做Xml Web Service WebService，是一种可以接收从Internet或者Internet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。">
+<meta property="og:image" content="http://7xvh4i.com1.z0.glb.clouddn.com/1206283249.jpg">
+<meta property="og:updated_time" content="2016-11-28T09:56:24.910Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebService">
+<meta name="twitter:description" content="WebService也叫做Xml Web Service WebService，是一种可以接收从Internet或者Internet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。">
+<meta name="twitter:image" content="http://7xvh4i.com1.z0.glb.clouddn.com/1206283249.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://my.oschina.net/u/588736/blog/2016/09/02/WebService01/"/>
+
+
+  <title> WebService | 晚来风 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">晚来风</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">林花谢了春红，太匆匆。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                WebService
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-02T09:56:00+08:00" content="2016-09-02">
+              2016-09-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>WebService也叫做Xml Web Service WebService，是一种可以接收从Internet或者Internet上的其它系统中传递过来的请求，轻量级的独立的通讯技术。是通过SOAP在Web上提供的软件服务，使用WSDL文件进行说明，并通过UDDI进行注册。  </p>
+<a id="more"></a>
+<p>可以这么认为：WebService被定义用来使不同应用之间通过网络传输数据的一种标准，该标准与具体的语言无关。比如有两个应用（A和B），A应用使用php开发，B项目使用java开发：</p>
+<ol>
+<li><p>A应用提供接口（B发送请求数据给应用）<br>B调用A接口（B发送请求数据） -&gt; A接口接收 -&gt; A接口处理B的数据</p>
+</li>
+<li><p>B应用提供接口（A应用需要从B应用获取数据来做展现）<br>A调用B接口（提供相应的查询参数） -&gt; B接收 -&gt; B返回数据（若B中的数据有更新，则A取到的数据也是最新的）</p>
+</li>
+</ol>
+<h2 id="WebService相关的四种技术"><a href="#WebService相关的四种技术" class="headerlink" title="WebService相关的四种技术"></a>WebService相关的四种技术</h2><h3 id="1-XML"><a href="#1-XML" class="headerlink" title="1. XML"></a>1. XML</h3><p>XML是用来标记数据的（对于XML标签详细介绍，可以参考<a href="http://www.w3school.com.cn/x.asp" target="_blank" rel="external">W3C</a>），如上所说，webservice不依赖于某一门特定的编程语言。而不同的应用系统可能是使用不同的编程语言来开发，（如上：项目A使用PHP开发，项目B使用Java开发）所以说就需要一种方式来交换数据，这种方式同样不依赖于某种编程语言，大多数软件都集成了XML标签，因此使用XML格式的数据来实现数据的交换。XML面向短期的临时数据处理、面向万维网络，是Soap的基础。</p>
+<h3 id="2-SOAP"><a href="#2-SOAP" class="headerlink" title="2. SOAP"></a>2. SOAP</h3><p>Simple Object Access Protocol 简单对象存取协议，是WebService的通信协议。当用户通过UDDI找到你的描述文档后，可以通过SOAP调用你建立的Web服务中的一个或多个操作。SOAP是XML文档形式的调用方法的规范，可以支持不同的底层接口，像http(s)或者smtp。当调用方一旦发现提供Webservice接口的地址，它将会使用SOAP协议和提供Webservice的系统进行连接。</p>
+<h3 id="3-WSDL"><a href="#3-WSDL" class="headerlink" title="3. WSDL"></a>3. WSDL</h3><p>Web Services Description Language，WSDL文件是一个XML文档，用于说明一组SOAP消息以及如何交换这些消息。大多数情况下由软件自动生成和使用。当有客户端发起调用的时候，Webservice提供方会参考这个WSDL规则来验证数据请求的合法性。</p>
+<h3 id="4-UDDI"><a href="#4-UDDI" class="headerlink" title="4. UDDI"></a>4. UDDI</h3><p>Universal Description, Discovery, and Integration，是一个主要针对Web服务供应商和使用者的新项目。在用户能够调用Web服务之前，必须确定这个服务内包含哪些商务方法，找到被调用的接口定义，还要在服务端来编制软件，UDDI是一种根据描述文档来引导系统查找相应服务的机制。UDDI利用SOAP消息机制（标准的XML/HTTP）来发布、编辑、浏览以及查找注册信息。它采用XML格式来封装各种不同类型的数据，并且发送到注册中心或者由注册中心来返回需要的数据。UDDI列出了哪些服务是可以被访问的，当一个系统需要数据的时候，首先它会先查找UDDI，找出从除了自己之外的那些可以获取到自己需要的数据的服务，然后进行链接获取数据。这一点有点类似于DNS的功能。</p>
+<h2 id="调用原理"><a href="#调用原理" class="headerlink" title="调用原理"></a>调用原理</h2><p>Web服务有两层含义：  </p>
+<ol>
+<li>指封装成单个实体并发布到网络上的功能集合体</li>
+<li>指功能集合体被调用后所提供的服务，也就是说，Web服务是一个URL资源，客户端可以通过编程方式请求得到它的服务，而不需要知道所请求的服务是怎样实现的，这一点和传统的分布式组件对象模型不同。</li>
+</ol>
+<p>Web服务的体系结构基于三个角色：  </p>
+<ul>
+<li>Web服务的提供者</li>
+<li>Web服务的调用者</li>
+<li>Web服务中介</li>
+</ul>
+<p>这三个角色通过发布、发现、绑定三个动作构建web服务的体系结构。</p>
+<p><img src="http://7xvh4i.com1.z0.glb.clouddn.com/1206283249.jpg" alt=""></p>
+<p><strong>实现一个完整的web服务的步骤</strong>  </p>
+<ul>
+<li>Web服务提供者设计实现Web服务，调试正确后通过Web中介者发布，并在UDDI注册中心注册。（发布）</li>
+<li>Web服务请求者向Web服务中介者请求特定的服务，中介者根据请求查询UDDI注册中心，为请求者寻找特定的服务。（发现）</li>
+<li>Web服务中介者找到特定的服务后向Web服务请求者返回满足条件的Web服务描述信息（WSDL写成，各种支持Web服务的机器都能阅读）。（发现）</li>
+<li>利用Web服务返回的描述信息生成相应的SOAP消息，发送给Web服务提供者，即可实现Web服务的调用。（绑定）</li>
+<li>Web服务提供者按SOAP消息执行相应的操作，并将服务执行结果返回给Web服务请求者。（绑定）</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/01/NoClassDefFoundError/" rel="next" title="java.lang.NoClassDefFoundError">
+                <i class="fa fa-chevron-left"></i> java.lang.NoClassDefFoundError
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/05/gitbash_common/" rel="prev" title="Git for Windows">
+                Git for Windows <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LenhartG" />
+          <p class="site-author-name" itemprop="name">LenhartG</p>
+          <p class="site-description motion-element" itemprop="description">美国《时代周刊》2006年度风云人物</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gxjares" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2526255830" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#WebService相关的四种技术"><span class="nav-number">1.</span> <span class="nav-text">WebService相关的四种技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-XML"><span class="nav-number">1.1.</span> <span class="nav-text">1. XML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SOAP"><span class="nav-number">1.2.</span> <span class="nav-text">2. SOAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-WSDL"><span class="nav-number">1.3.</span> <span class="nav-text">3. WSDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-UDDI"><span class="nav-number">1.4.</span> <span class="nav-text">4. UDDI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用原理"><span class="nav-number">2.</span> <span class="nav-text">调用原理</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=208889&auto=1&height=66"></iframe>
+</div>
+<div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LenhartG</span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+-->
+
+<!--
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

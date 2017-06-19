@@ -1,0 +1,650 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="记录一些 java web 的知识点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java_web some issues">
+<meta property="og:url" content="https://my.oschina.net/u/588736/blog/2016/07/12/java_web_sth/index.html">
+<meta property="og:site_name" content="晚来风">
+<meta property="og:description" content="记录一些 java web 的知识点">
+<meta property="og:updated_time" content="2016-11-28T09:56:24.959Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java_web some issues">
+<meta name="twitter:description" content="记录一些 java web 的知识点">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://my.oschina.net/u/588736/blog/2016/07/12/java_web_sth/"/>
+
+
+  <title> java_web some issues | 晚来风 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">晚来风</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">林花谢了春红，太匆匆。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java_web some issues
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-12T00:00:00+08:00" content="2016-07-12">
+              2016-07-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录一些 java web 的知识点</p>
+<a id="more"></a>
+<h4 id="1-提交表单后在action中转到下一个jsp时用-lt-request-getParameter-“username”-gt-可以取到值，但EL表达式取不到值"><a href="#1-提交表单后在action中转到下一个jsp时用-lt-request-getParameter-“username”-gt-可以取到值，但EL表达式取不到值" class="headerlink" title="1.提交表单后在action中转到下一个jsp时用&lt;%=request.getParameter(“username”) %&gt;可以取到值，但EL表达式取不到值"></a>1.提交表单后在action中转到下一个jsp时用&lt;%=request.getParameter(“username”) %&gt;可以取到值，但EL表达式取不到值</h4><p>EL表达式是获取：application、session、request、page中的attribute的值的。get的是parameters（集合?），我这样写获得应该是request里的attribute，所以EL改成${param.username} —-(集合param中具体的attribute)就可以获取参数的值了。</p>
+<h4 id="2-请求参数包含中文"><a href="#2-请求参数包含中文" class="headerlink" title="2.请求参数包含中文"></a>2.请求参数包含中文</h4><p>请求参数中有值为中文时，需要使用URLEncoder.encode(“中文参数值”, “UTF-8”);对其进行编码后再传值，但此时在jsp页面获取该参数值后会出现乱码，需要&lt;%=URLDecoder.decode(new String(request.getParameter(“username”).getBytes(“ISO8859-1”), “UTF-8”)) %&gt;解码：tomcat默认以ISO8859-1二进制存储中文，先获取二进制的字节码生成UTF-8格式的字符串，然后解码处理。</p>
+<h4 id="3-Struts2常量的具体用法实例"><a href="#3-Struts2常量的具体用法实例" class="headerlink" title="3.Struts2常量的具体用法实例"></a>3.Struts2常量的具体用法实例</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">&lt;!-- 指定Web应用的默认编码集,相当于调用HttpServletRequest的setCharacterEncoding方法 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.i18n.encoding"</span> <span class="attr">value</span>=<span class="string">"UTF-8"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">!-</span> 国际化<span class="attr">-</span>把资源文件定为全局变量 <span class="attr">baseName</span>为名字<span class="attr">--</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.custom.i18n.resources"</span> <span class="attr">value</span>=<span class="string">"baseName"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--该属性指定需要Struts 2处理的请求后缀，该属性的默认值是action，即所有匹配*.action的请求都由Struts2处理。 如果用户需要指定多个请求后缀，则多个后缀之间以英文逗号（,）隔开--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.action.extension"</span> <span class="attr">value</span>=<span class="string">"do,action,htm,html,jsp"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 设置浏览器是否缓存静态内容,默认值为true(生产环境下使用),开发阶段最好关闭 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.serve.static.browserCache"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></div><div class="line"></div><div class="line"> <span class="comment">&lt;!-- 当struts的配置文件修改后,系统是否自动重新加载该文件,默认值为false(生产环境下使用),开发阶段最好打开--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.configuration.xml.reload"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 开发模式下使用,这样可以打印出更详细的错误信息 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.devMode"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 默认的视图主题 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.ui.theme"</span> <span class="attr">value</span>=<span class="string">"simple"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- spring 托管 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.objectFactory"</span> <span class="attr">value</span>=<span class="string">"spring"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--指定加载struts2配置文件管理器，默认为org.apache.struts2.config.DefaultConfiguration</span></div><div class="line">开发者可以自定义配置文件管理器，该类要实现Configuration接口，可以自动加载struts2配置文件--&gt;</div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.configuration"</span> <span class="attr">value</span>=<span class="string">"org.apache.struts2.config.DefaultConfiguration"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 设置默认的locale和字符编码 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.locale"</span> <span class="attr">value</span>=<span class="string">"zh_CN"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.i18n.encoding"</span> <span class="attr">value</span>=<span class="string">"GBK"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--指定spring框架的装配模式，装配方式有: name, type, auto, and constructor (name是默认装配模式)&gt;</span></div><div class="line">&lt;constant name="struts.objectFactory.spring.autoWire" value="name" /&gt;</div><div class="line">&lt;!-- 该属性指定整合spring时，是否对bean进行缓存，值为true or false,默认为true --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">cosntant</span> <span class="attr">name</span>=<span class="string">"struts.objectFactory.spring.useClassCache"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 指定类型检查,包含tiger和notiger --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">cosntant</span> <span class="attr">name</span>=<span class="string">"struts.objectTypeDeterminer"</span> <span class="attr">value</span>=<span class="string">"tiger"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 该属性指定处理 MIME-type multipart/form-data，文件上传 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.multipart.parser"</span> <span class="attr">value</span>=<span class="string">"cos"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.multipart.parser"</span> <span class="attr">value</span>=<span class="string">"pell"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.multipart.parser"</span> <span class="attr">value</span>=<span class="string">"jakarta"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 指定上传文件时的临时目录，默认使用 javax.servlet.context.tempdir --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.multipart.saveDir"</span> <span class="attr">value</span>=<span class="string">"/tmpuploadfiles"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 该属性指定Struts 2文件上传中整个请求内容允许的最大字节数 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.multipart.maxSize"</span> <span class="attr">value</span>=<span class="string">"2097152"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--该属性指定Struts2应用加载用户自定义的属性文件，该自定义属性文件指定的属性不会覆盖struts.properties文件中指定的属性。如果需要加载多个自定义属性文件，多个自定义属性文</span></div><div class="line">件的文件名以英文逗号（,）隔开。(也就是说不要改写struts.properties!)  --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.custom.properties"</span><span class="attr">value</span>=<span class="string">"application,org/apache/struts2/extension/custom"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 指定请求url与action映射器，默认为org.apache.struts2.dispatcher.mapper.DefaultActionMapper -&gt;</span></div><div class="line"></div><div class="line">&lt;constant name="struts.mapper.class"           value="org.apache.struts2.dispatcher.mapper.DefaultActionMapper" /&gt;</div><div class="line"></div><div class="line">&lt;!-- 设置是否支持动态方法调用，true为支持，false不支持. --&gt;</div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.enable.DynamicMethodInvocation"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 设置是否可以在action中使用斜线，默认为false不可以，想使用需设置为true. --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.enable.SlashesInActionNames"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 是否允许使用表达式语法，默认为true. --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">constant</span> <span class="attr">name</span>=<span class="string">"struts.tag.altSyntax"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 设置当struts.xml文件改动时，是否重新加载 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">cosntant</span> <span class="attr">name</span>=<span class="string">"struts.configuration.xml.reload"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="4-Struts1-amp-Struts2"><a href="#4-Struts1-amp-Struts2" class="headerlink" title="4.Struts1 &amp; Struts2"></a>4.Struts1 &amp; Struts2</h4><p>与Struts1不同，Struts2对用户的每一次请求都会创建一个Action，所以Struts2中的Action是线程安全的。 Struts1是将Action放入缓存，每次请求会从缓存中获取Action来处理，在应用生命周期内仅会存在一个实例，相当于单例。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/29/something_interested/" rel="next" title="随手记_多态">
+                <i class="fa fa-chevron-left"></i> 随手记_多态
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/25/servlet_01/" rel="prev" title="Servlet">
+                Servlet <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LenhartG" />
+          <p class="site-author-name" itemprop="name">LenhartG</p>
+          <p class="site-description motion-element" itemprop="description">美国《时代周刊》2006年度风云人物</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gxjares" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2526255830" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-提交表单后在action中转到下一个jsp时用-lt-request-getParameter-“username”-gt-可以取到值，但EL表达式取不到值"><span class="nav-number">1.</span> <span class="nav-text">1.提交表单后在action中转到下一个jsp时用<%=request.getParameter(“username”) %>可以取到值，但EL表达式取不到值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-请求参数包含中文"><span class="nav-number">2.</span> <span class="nav-text">2.请求参数包含中文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Struts2常量的具体用法实例"><span class="nav-number">3.</span> <span class="nav-text">3.Struts2常量的具体用法实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Struts1-amp-Struts2"><span class="nav-number">4.</span> <span class="nav-text">4.Struts1 & Struts2</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=208889&auto=1&height=66"></iframe>
+</div>
+<div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LenhartG</span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+-->
+
+<!--
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

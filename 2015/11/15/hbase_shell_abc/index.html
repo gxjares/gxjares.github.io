@@ -1,0 +1,671 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hbase," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="HBase一些常用的命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hbase shell基本操作">
+<meta property="og:url" content="https://my.oschina.net/u/588736/blog/2015/11/15/hbase_shell_abc/index.html">
+<meta property="og:site_name" content="晚来风">
+<meta property="og:description" content="HBase一些常用的命令">
+<meta property="og:updated_time" content="2016-11-28T09:56:24.955Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hbase shell基本操作">
+<meta name="twitter:description" content="HBase一些常用的命令">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://my.oschina.net/u/588736/blog/2015/11/15/hbase_shell_abc/"/>
+
+
+  <title> Hbase shell基本操作 | 晚来风 </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">晚来风</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">林花谢了春红，太匆匆。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hbase shell基本操作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-11-15T00:00:00+08:00" content="2015-11-15">
+              2015-11-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>HBase一些常用的命令<br><a id="more"></a></p>
+<h1 id="一般操作"><a href="#一般操作" class="headerlink" title="一般操作"></a>一般操作</h1><h2 id="查询服务器状态"><a href="#查询服务器状态" class="headerlink" title="查询服务器状态"></a>查询服务器状态</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; status</div><div class="line">3 servers, 0 dead, 2.6667 average load</div></pre></td></tr></table></figure>
+<h2 id="查看版本"><a href="#查看版本" class="headerlink" title="查看版本"></a>查看版本</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; version</div><div class="line">0.98.6-transwarp, r14622, Wed Aug 12 16:26:42 CST 2015</div></pre></td></tr></table></figure>
+<h2 id="查看数据库中有哪些表"><a href="#查看数据库中有哪些表" class="headerlink" title="查看数据库中有哪些表"></a>查看数据库中有哪些表</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; list</div><div class="line">...</div></pre></td></tr></table></figure>
+<h2 id="查看当前用户"><a href="#查看当前用户" class="headerlink" title="查看当前用户"></a>查看当前用户</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; whoami</div><div class="line">...</div></pre></td></tr></table></figure>
+<h2 id="查看表结构"><a href="#查看表结构" class="headerlink" title="查看表结构"></a>查看表结构</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt; describe <span class="string">'nstest:tabletest'</span></div><div class="line">DESCRIPTION                                                                                       ENABLED                                            </div><div class="line"><span class="string">'nstest:tabletest'</span>, &#123;NAME =&gt; <span class="string">'course'</span>, DATA_BLOCK_ENCODING =&gt; <span class="string">'NONE'</span>, BLOOMFILTER =&gt; <span class="string">'ROW'</span>, REPL <span class="literal">false</span>                                              </div><div class="line">ICATION_SCOPE =&gt; <span class="string">'0'</span>, VERSIONS =&gt; <span class="string">'1'</span>, COMPRESSION =&gt; <span class="string">'NONE'</span>, MIN_VERSIONS =&gt; <span class="string">'0'</span>, TTL =&gt; <span class="string">'FOREV                                                    </span></div><div class="line">ER', KEEP_DELETED_CELLS =&gt; <span class="string">'false'</span>, BLOCKSIZE =&gt; <span class="string">'65536'</span>, IN_MEMORY =&gt; <span class="string">'false'</span>, BLOCKCACHE =&gt; <span class="string">'t                                                    </span></div><div class="line">rue'&#125;, &#123;NAME =&gt; <span class="string">'info'</span>, DATA_BLOCK_ENCODING =&gt; <span class="string">'NONE'</span>, BLOOMFILTER =&gt; <span class="string">'ROW'</span>, REPLICATION_SCOPE =                                                    </div><div class="line">&gt; <span class="string">'0'</span>, VERSIONS =&gt; <span class="string">'1'</span>, COMPRESSION =&gt; <span class="string">'NONE'</span>, MIN_VERSIONS =&gt; <span class="string">'0'</span>, TTL =&gt; <span class="string">'FOREVER'</span>, KEEP_DELET                                                    </div><div class="line">ED_CELLS =&gt; <span class="string">'false'</span>, BLOCKSIZE =&gt; <span class="string">'65536'</span>, IN_MEMORY =&gt; <span class="string">'false'</span>, BLOCKCACHE =&gt; <span class="string">'true'</span>&#125;                                                              </div><div class="line">1 row(s) <span class="keyword">in</span> 0.0970 seconds</div></pre></td></tr></table></figure>
+<h2 id="修改表结构"><a href="#修改表结构" class="headerlink" title="修改表结构"></a>修改表结构</h2><p>语法：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alter <span class="string">'t1'</span>, &#123;NAME =&gt; <span class="string">'f1'</span>&#125;, &#123;NAME =&gt; <span class="string">'f2'</span>, METHOD =&gt; <span class="string">'delete'</span>&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="表操作示例"><a href="#表操作示例" class="headerlink" title="表操作示例"></a>表操作示例</h1><h2 id="创建命名空间namespace"><a href="#创建命名空间namespace" class="headerlink" title="创建命名空间namespace"></a>创建命名空间namespace</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">create_namespace <span class="string">'nstest'</span></div></pre></td></tr></table></figure>
+<p>默认命名空间 default。</p>
+<h2 id="创建表-DDL"><a href="#创建表-DDL" class="headerlink" title="创建表(DDL)"></a>创建表(DDL)</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">     create <span class="string">'nstest:tabletest'</span>,&#123;NAME=&gt;<span class="string">'info'</span>,VERSIONS=&gt;1&#125;,&#123;NAME=&gt;<span class="string">'course'</span>,VERSION=&gt;2&#125;</div><div class="line">or</div><div class="line">      create <span class="string">'nstest:tabletest'</span>,<span class="string">'info'</span>,<span class="string">'course'</span></div></pre></td></tr></table></figure>
+<h2 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h2><h3 id="放入一行数据到-‘rk001’"><a href="#放入一行数据到-‘rk001’" class="headerlink" title="放入一行数据到 ‘rk001’"></a>放入一行数据到 ‘rk001’</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk001'</span>,<span class="string">'info:name'</span>,<span class="string">'zhangsan'</span></div><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk001'</span>,<span class="string">'info:age'</span>,22</div><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk001'</span>,<span class="string">'info:gender'</span>,<span class="string">'male'</span></div><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk001'</span>,<span class="string">'course:math'</span>,90</div><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk001'</span>,<span class="string">'course:chemistry'</span>,88</div><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk001'</span>,<span class="string">'course:physics'</span>,99</div></pre></td></tr></table></figure>
+<h3 id="查看数据："><a href="#查看数据：" class="headerlink" title="查看数据："></a>查看数据：</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;scan <span class="string">'nstest:tabletest'</span></div><div class="line">ROW                                    COLUMN+CELL                                                                                                   </div><div class="line">rk001                                 column=course:chemistry, timestamp=1446615941701, value=88                                                    </div><div class="line">rk001                                 column=course:math, timestamp=1446615930140, value=90                                                         </div><div class="line">rk001                                 column=course:physics, timestamp=1446615982119, value=99                                                      </div><div class="line">rk001                                 column=info:age, timestamp=1446615909567, value=22                                                            </div><div class="line">rk001                                 column=info:gender, timestamp=1446615918476, value=male                                                       </div><div class="line">rk001                                 column=info:name, timestamp=1446615900714, value=zhangsan                                                     </div><div class="line">1 row(s) <span class="keyword">in</span> 0.0640 seconds</div></pre></td></tr></table></figure>
+<h2 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h2><p>放入数据到 ‘rk002’<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk002'</span>,<span class="string">'info:name'</span>,<span class="string">'lisi'</span></div></pre></td></tr></table></figure></p>
+<p>更新数据<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk002'</span>,<span class="string">'info:name'</span>,<span class="string">'wangnima'</span></div></pre></td></tr></table></figure></p>
+<h2 id="列簇下可以添加新列"><a href="#列簇下可以添加新列" class="headerlink" title="列簇下可以添加新列"></a>列簇下可以添加新列</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk003'</span>,<span class="string">'info:name'</span>,<span class="string">'lalala'</span></div></pre></td></tr></table></figure>
+<p>添加新列到列簇info：interest<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">put <span class="string">'nstest:tabletest'</span>,<span class="string">'rk003'</span>,<span class="string">'info:interest'</span>,<span class="string">'basketball'</span></div></pre></td></tr></table></figure></p>
+<h2 id="判断表是否存在"><a href="#判断表是否存在" class="headerlink" title="判断表是否存在"></a>判断表是否存在</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt; exists <span class="string">'tabletest'</span></div><div class="line">Table tabletest does not exist                                                                                                                       </div><div class="line">0 row(s) <span class="keyword">in</span> 0.0660 seconds</div><div class="line"></div><div class="line">&gt; exists <span class="string">'nstest:tabletest'</span></div><div class="line">Table nstest:tabletest does exist                                                                                                                    </div><div class="line">0 row(s) <span class="keyword">in</span> 0.0570 seconds</div></pre></td></tr></table></figure>
+<h2 id="判断表是否enable"><a href="#判断表是否enable" class="headerlink" title="判断表是否enable"></a>判断表是否enable</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; is_enabled <span class="string">'nstest:tabletest'</span></div><div class="line"><span class="literal">true</span>                                                                                                                                                 </div><div class="line">0 row(s) <span class="keyword">in</span> 0.0920 seconds</div></pre></td></tr></table></figure>
+<h2 id="统计表行数"><a href="#统计表行数" class="headerlink" title="统计表行数"></a>统计表行数</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; count <span class="string">"nstest:tabletest"</span></div><div class="line">3 row(s) <span class="keyword">in</span> 0.0730 seconds</div></pre></td></tr></table></figure>
+<h2 id="删除整行数据"><a href="#删除整行数据" class="headerlink" title="删除整行数据"></a>删除整行数据</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; deleteall <span class="string">'nstest:tabletest'</span>,<span class="string">'rk003'</span></div><div class="line">0 row(s) <span class="keyword">in</span> 0.0730 seconds</div></pre></td></tr></table></figure>
+<h2 id="查询表数据行数"><a href="#查询表数据行数" class="headerlink" title="查询表数据行数"></a>查询表数据行数</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; count <span class="string">"nstest:tabletest"</span></div><div class="line">2 row(s) <span class="keyword">in</span> 0.0220 seconds</div></pre></td></tr></table></figure>
+<h2 id="删除行中指定一列数据"><a href="#删除行中指定一列数据" class="headerlink" title="删除行中指定一列数据"></a>删除行中指定一列数据</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; delete <span class="string">'nstest:tabletest'</span>,<span class="string">'rk002'</span>,<span class="string">'info:age'</span></div><div class="line">0 row(s) <span class="keyword">in</span> 0.0420 seconds</div></pre></td></tr></table></figure>
+<h2 id="清空表中数据"><a href="#清空表中数据" class="headerlink" title="清空表中数据"></a>清空表中数据</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; truncate <span class="string">'nstest:tabletest'</span></div></pre></td></tr></table></figure>
+<h2 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h2><p>删除前必须disable<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="built_in">disable</span> <span class="string">'nstest:tabletest'</span></div><div class="line">0 row(s) <span class="keyword">in</span> 1.6030 seconds</div><div class="line"></div><div class="line">&gt; is_enabled <span class="string">'nstest:tabletest'</span></div><div class="line"><span class="literal">false</span>                                                                                                                                                </div><div class="line">0 row(s) <span class="keyword">in</span> 0.0720 seconds</div><div class="line"></div><div class="line">&gt; is_disabled <span class="string">'nstest:tabletest'</span></div><div class="line"><span class="literal">true</span>                                                                                                                                                 </div><div class="line">0 row(s) <span class="keyword">in</span> 0.0780 seconds</div><div class="line"><span class="comment">#[注：恢复表为enable（enable 'nstest:tabletest'）]</span></div><div class="line"></div><div class="line">&gt; drop <span class="string">'nstest:tabletest'</span></div></pre></td></tr></table></figure></p>
+<h2 id="查询某行记录"><a href="#查询某行记录" class="headerlink" title="查询某行记录"></a>查询某行记录</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&gt; get <span class="string">'nstest:tabletest'</span>, <span class="string">'rk001'</span></div><div class="line">COLUMN                                 CELL                                                                                                          </div><div class="line">course:chemistry                      timestamp=1451358643676, value=100                                                                            </div><div class="line">course:math                           timestamp=1446615930140, value=90                                                                             </div><div class="line">course:physics                        timestamp=1446615982119, value=99                                                                             </div><div class="line">info:age                              timestamp=1446615909567, value=22                                                                             </div><div class="line">info:gender                           timestamp=1447055769953, value=female                                                                         </div><div class="line">info:name                             timestamp=1446615900714, value=zhangsan                                                                       </div><div class="line">6 row(s) <span class="keyword">in</span> 0.0380 seconds</div><div class="line"></div><div class="line">&gt; get <span class="string">'nstest:tabletest'</span>, <span class="string">'rk001'</span>, <span class="string">'info:name'</span></div><div class="line">COLUMN                                 CELL                                                                                                          </div><div class="line">info:name                             timestamp=1446615900714, value=zhangsan                                                                       </div><div class="line">1 row(s) <span class="keyword">in</span> 0.0250 seconds</div></pre></td></tr></table></figure>
+<h2 id="删除列族"><a href="#删除列族" class="headerlink" title="删除列族"></a>删除列族</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">hbase(main):112:0&gt; describe <span class="string">'person'</span></div><div class="line">DESCRIPTION                                                                                       ENABLED                                            </div><div class="line"><span class="string">'person'</span>, &#123;NAME =&gt; <span class="string">'info'</span>, DATA_BLOCK_ENCODING =&gt; <span class="string">'NONE'</span>, BLOOMFILTER =&gt; <span class="string">'ROW'</span>, REPLICATION_SCOP <span class="literal">true</span>                                               </div><div class="line">E =&gt; <span class="string">'0'</span>, VERSIONS =&gt; <span class="string">'1'</span>, COMPRESSION =&gt; <span class="string">'NONE'</span>, MIN_VERSIONS =&gt; <span class="string">'0'</span>, TTL =&gt; <span class="string">'FOREVER'</span>, KEEP_DE                                                    </div><div class="line">LETED_CELLS =&gt; <span class="string">'false'</span>, BLOCKSIZE =&gt; <span class="string">'65536'</span>, IN_MEMORY =&gt; <span class="string">'false'</span>, BLOCKCACHE =&gt; <span class="string">'true'</span>&#125;, &#123;NAME                                                    </div><div class="line">  =&gt; <span class="string">'scores'</span>, DATA_BLOCK_ENCODING =&gt; <span class="string">'NONE'</span>, BLOOMFILTER =&gt; <span class="string">'ROW'</span>, REPLICATION_SCOPE =&gt; <span class="string">'0'</span>, COM                                                    </div><div class="line">PRESSION =&gt; <span class="string">'NONE'</span>, VERSIONS =&gt; <span class="string">'1'</span>, TTL =&gt; <span class="string">'FOREVER'</span>, MIN_VERSIONS =&gt; <span class="string">'0'</span>, KEEP_DELETED_CELLS =                                                    </div><div class="line">&gt; <span class="string">'false'</span>, BLOCKSIZE =&gt; <span class="string">'65536'</span>, IN_MEMORY =&gt; <span class="string">'false'</span>, BLOCKCACHE =&gt; <span class="string">'true'</span>&#125;                                                                        </div><div class="line">1 row(s) <span class="keyword">in</span> 0.1520 seconds</div><div class="line"></div><div class="line">hbase(main):113:0&gt; scan <span class="string">'person'</span></div><div class="line">ROW                                    COLUMN+CELL                                                                                                   </div><div class="line">rk001                                 column=info:age, timestamp=1451442628675, value=24                                                            </div><div class="line">rk001                                 column=info:name, timestamp=1451442620135, value=zhangsan                                                     </div><div class="line">rk001                                 column=scores:Chemistry, timestamp=1451442849747, value=99                                                    </div><div class="line">1 row(s) <span class="keyword">in</span> 0.0340 seconds</div><div class="line"></div><div class="line">hbase(main):115:0&gt; alter <span class="string">'person'</span>, <span class="string">'delete'</span> =&gt; <span class="string">'info'</span></div><div class="line">Updating all regions with the new schema...</div><div class="line">0/1 regions updated.</div><div class="line">1/1 regions updated.</div><div class="line">Done.</div><div class="line">0 row(s) <span class="keyword">in</span> 2.9820 seconds</div><div class="line"></div><div class="line">hbase(main):116:0&gt; scan <span class="string">'person'</span></div><div class="line">ROW                                    COLUMN+CELL                                                                                                   </div><div class="line">rk001                                 column=scores:Chemistry, timestamp=1451442849747, value=99                                                    </div><div class="line">1 row(s) <span class="keyword">in</span> 0.0170 seconds</div></pre></td></tr></table></figure>
+<h2 id="增加列族"><a href="#增加列族" class="headerlink" title="增加列族"></a>增加列族</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">hbase(main):117:0&gt; alter <span class="string">'person'</span>, &#123;NAME=&gt;<span class="string">'info'</span>&#125;</div><div class="line">Unknown argument ignored: info</div><div class="line">Updating all regions with the new schema...</div><div class="line">0/1 regions updated.</div><div class="line">1/1 regions updated.</div><div class="line">Done.</div><div class="line">0 row(s) <span class="keyword">in</span> 2.8670 seconds</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hbase/" rel="tag">#Hbase</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/15/hiredis_abc/" rel="next" title="Hiredis">
+                <i class="fa fa-chevron-left"></i> Hiredis
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/01/some_faq/" rel="prev" title="随手记_01">
+                随手记_01 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="LenhartG" />
+          <p class="site-author-name" itemprop="name">LenhartG</p>
+          <p class="site-description motion-element" itemprop="description">美国《时代周刊》2006年度风云人物</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gxjares" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2526255830" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一般操作"><span class="nav-number">1.</span> <span class="nav-text">一般操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询服务器状态"><span class="nav-number">1.1.</span> <span class="nav-text">查询服务器状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看版本"><span class="nav-number">1.2.</span> <span class="nav-text">查看版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看数据库中有哪些表"><span class="nav-number">1.3.</span> <span class="nav-text">查看数据库中有哪些表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看当前用户"><span class="nav-number">1.4.</span> <span class="nav-text">查看当前用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看表结构"><span class="nav-number">1.5.</span> <span class="nav-text">查看表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改表结构"><span class="nav-number">1.6.</span> <span class="nav-text">修改表结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表操作示例"><span class="nav-number">2.</span> <span class="nav-text">表操作示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建命名空间namespace"><span class="nav-number">2.1.</span> <span class="nav-text">创建命名空间namespace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建表-DDL"><span class="nav-number">2.2.</span> <span class="nav-text">创建表(DDL)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DML"><span class="nav-number">2.3.</span> <span class="nav-text">DML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#放入一行数据到-‘rk001’"><span class="nav-number">2.3.1.</span> <span class="nav-text">放入一行数据到 ‘rk001’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据："><span class="nav-number">2.3.2.</span> <span class="nav-text">查看数据：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新数据"><span class="nav-number">2.4.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列簇下可以添加新列"><span class="nav-number">2.5.</span> <span class="nav-text">列簇下可以添加新列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断表是否存在"><span class="nav-number">2.6.</span> <span class="nav-text">判断表是否存在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断表是否enable"><span class="nav-number">2.7.</span> <span class="nav-text">判断表是否enable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计表行数"><span class="nav-number">2.8.</span> <span class="nav-text">统计表行数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除整行数据"><span class="nav-number">2.9.</span> <span class="nav-text">删除整行数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询表数据行数"><span class="nav-number">2.10.</span> <span class="nav-text">查询表数据行数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除行中指定一列数据"><span class="nav-number">2.11.</span> <span class="nav-text">删除行中指定一列数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清空表中数据"><span class="nav-number">2.12.</span> <span class="nav-text">清空表中数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除表"><span class="nav-number">2.13.</span> <span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询某行记录"><span class="nav-number">2.14.</span> <span class="nav-text">查询某行记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除列族"><span class="nav-number">2.15.</span> <span class="nav-text">删除列族</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加列族"><span class="nav-number">2.16.</span> <span class="nav-text">增加列族</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=208889&auto=1&height=66"></iframe>
+</div>
+<div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LenhartG</span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+-->
+
+<!--
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
